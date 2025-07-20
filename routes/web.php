@@ -4,7 +4,16 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PasswordlessLoginController;
+
+// Custom GET logout route to avoid CSRF issues
+Route::get('/logout-get', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->middleware('auth')->name('logout.get');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

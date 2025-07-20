@@ -31,6 +31,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'name',
         'email',
         'password',
         'sms',
@@ -85,6 +86,27 @@ class User extends Authenticatable
             'is_super_admin' => 'boolean',
             'super' => 'boolean',
         ];
+    }
+
+    /**
+     * Boot the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Automatically update name field when first_name or last_name changes
+        static::saving(function ($user) {
+            $user->updateNameField();
+        });
+    }
+
+    /**
+     * Update the name field based on first_name and last_name
+     */
+    protected function updateNameField()
+    {
+        $this->name = trim($this->first_name . ' ' . $this->last_name);
     }
 
     /**
@@ -271,13 +293,5 @@ class User extends Authenticatable
     public function getFullNameAttribute(): string
     {
         return trim($this->first_name . ' ' . $this->last_name);
-    }
-
-    /**
-     * Get the user's full name (alias for getFullNameAttribute).
-     */
-    public function getNameAttribute(): string
-    {
-        return $this->getFullNameAttribute();
     }
 }

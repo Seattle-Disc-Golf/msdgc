@@ -23,7 +23,8 @@ const switchToTeam = (team) => {
 };
 
 const logout = () => {
-    window.location.href = route('logout.get');
+    // Force a full page navigation to logout, which will reload after redirect
+    window.location.replace(route('logout.get'));
 };
 </script>
 

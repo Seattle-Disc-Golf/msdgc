@@ -12,7 +12,7 @@ Route::get('/logout-get', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
-    return redirect('/');
+    return redirect('/')->with('_reload', true);
 })->middleware('auth')->name('logout.get');
 
 Route::get('/', function () {

@@ -64,7 +64,7 @@ const getIconForTitle = (title) => {
         :show-navigation="true"
         hero-title="Put your bag down, and get involved."
         hero-subtitle="It takes a village to make our club great"
-        hero-background="/images/involved/happy_place.jpeg">
+        hero-background="/images/happy_place.jpg">
         <div class="bg-gray-100 dark:bg-zinc-900 basket-tile">
 
             <!-- Main Content -->

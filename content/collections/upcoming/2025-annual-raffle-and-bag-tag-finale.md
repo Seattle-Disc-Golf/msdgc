@@ -9,5 +9,6 @@ start_time: '10:00'
 end_time: '15:00'
 description: 'Come and support the club!'
 updated_by: 1
-updated_at: 1753065595
+updated_at: 1753066353
+symbol: 🎟️
 ---

@@ -13,11 +13,10 @@ tabs:
               validate:
                 - required
           -
-            handle: organizer
+            handle: symbol
             field:
-              mode: typeahead
-              type: users
-              display: Organizer
+              type: text
+              display: symbol
           -
             handle: date_field
             field:

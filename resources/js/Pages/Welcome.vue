@@ -7,6 +7,7 @@ import Membership from './Sections/Membership.vue';
 import DiscGolfSponsors from './Sections/DiscGolfSponsors.vue';
 import LocalSponsors from './Sections/LocalSponsors.vue';
 import MondayDubs from './Sections/MondayDubs.vue';
+import UpcomingEvents from './Sections/UpcomingEvents.vue';
 
 defineProps({
     canLogin: {
@@ -35,7 +36,7 @@ const sponsors = ref([]);
 const minutes = ref([]);
 
 const non_pro_shop_sponsors = ref([]);
-
+const upcoming_events = ref([]);
 
 onMounted(async () => {
     try {
@@ -56,15 +57,17 @@ onMounted(async () => {
     } catch (error) {
         console.error('Error fetching sponsors:', error);
     }
+
+    // Fetch board minutes
     try {
-        const response = await fetch('/api/collections/board_minutes');
+        const response = await fetch('/api/collections/upcoming');
         if (response.ok) {
-            minutes.value = await response.json();
+            upcoming_events.value = await response.json();
         } else {
-            console.error('Failed to fetch board minutes');
+            console.error('Failed to fetch upcoming_events');
         }
     } catch (error) {
-        console.error('Error fetching board minutes:', error);
+        console.error('Error fetching upcoming_events:', error);
     }
 
 
@@ -107,13 +110,12 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                 <div class="relative w-full px-6 lg:max-w-7xl">
                     <main class="my-6">
                         <div class="grid grid-cols-1 gap-6">
+                            <UpcomingEvents class="col-span-1" :upcoming_events="upcoming_events.items || []" />
                             <div class="grid grid-cols-1 xl:grid-cols-3  xl:gap-6">
                                 <!-- Monday Dubs Card - Full Width -->
-                                <MondayDubs class="col-span-1"/>
+                                <MondayDubs class="col-span-2" />
 
-                                <div class="col-span-1 rounded-2xl bg-white shadow-lg p-6">
-                                    UPCOMING EVENTS
-                                    </div>
+
 
                                 <!-- Sponsors Section - 2 Column Layout -->
                                 <DiscGolfSponsors class="col-span-1" :sponsors="sponsors.items || []" />
@@ -140,9 +142,12 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                                         before
                                         start times, which can be edited to fit your preference.
                                     </p>
-                                    <button class="btn-primary mt-8">
-                                        Check out the calendar!
-                                    </button>
+                                    <div class="mt-6 flex justify-center">
+                                     <a href="
+                                            https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
+                                            target="_blank" rel="noopener"
+                                            class="btn-primary bangers text-3xl">Calendar</a>
+                                    </div>
                                 </div>
                             </section>
 

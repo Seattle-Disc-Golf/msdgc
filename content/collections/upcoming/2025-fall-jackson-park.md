@@ -8,5 +8,6 @@ date_field: '2025-10-25'
 start_time: '08:00'
 end_time: '17:00'
 updated_by: 1
-updated_at: 1753065635
+updated_at: 1753066322
+symbol: ⛳️
 ---

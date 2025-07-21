@@ -635,9 +635,9 @@ const filteredMembers = computed(() => {
     return searchTerms.some(term =>
       (member.first_name ? member.first_name.toLowerCase() : '').includes(term) ||
       (member.last_name ? member.last_name.toLowerCase() : '').includes(term) ||
-      (member.email ? member.email.toLowerCase() : '').includes(term) ||
-      (member.sms ? member.sms.toLowerCase() : '').includes(term) ||
-      (member.tags ? member.tags.toLowerCase() : '').includes(term)
+      (member.email ? member.email.toLowerCase() : '').includes(term)
+    //   (member.sms ? member.sms.toLowerCase() : '').includes(term) ||
+    //   (member.tags ? member.tags.toLowerCase() : '').includes(term)
     )
   })
 })

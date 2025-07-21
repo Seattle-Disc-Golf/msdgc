@@ -85,17 +85,108 @@
     </div>
 
     <!-- Search and Filter -->
-    <div class="mb-4">
+    <div class="mb-4 space-y-4">
+      <!-- Search Input -->
       <div class="relative">
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search members..."
-          class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          class="w-full pl-10 pr-20 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
+        <button
+          @click="showSearchOptions = !showSearchOptions"
+          class="absolute right-3 top-2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+          title="Search Options"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search Options (Collapsible) -->
+      <div v-if="showSearchOptions" class="flex flex-col sm:flex-row gap-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+        <!-- Search Fields Selection -->
+        <div class="flex-1">
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Search In Fields:
+            </label>
+            <div class="flex gap-2">
+              <button
+                @click="selectAllSearchFields"
+                class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                All
+              </button>
+              <button
+                @click="resetSearchFilters"
+                class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <label v-for="field in availableSearchFields" :key="field.key" class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                :value="field.key"
+                v-model="searchFields"
+                class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{ field.label }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Match Type Selection -->
+        <div class="min-w-0 sm:min-w-[200px]">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Match Type:
+          </label>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2">
+              <input
+                type="radio"
+                value="includes"
+                v-model="searchMatchType"
+                class="text-blue-600 focus:ring-blue-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Contains (partial match)</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="radio"
+                value="exact"
+                v-model="searchMatchType"
+                class="text-blue-600 focus:ring-blue-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Exact match</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Summary -->
+      <div v-if="searchQuery" class="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-between">
+        <span>
+          Showing {{ filteredMembers.length }} of {{ members.length }} members
+          <span class="text-blue-600 dark:text-blue-400">
+            ({{ searchMatchType === 'exact' ? 'exact match' : 'contains' }} in: {{ searchFields.map(f => availableSearchFields.find(af => af.key === f)?.label).join(', ') }})
+          </span>
+        </span>
+        <button
+          v-if="!showSearchOptions"
+          @click="showSearchOptions = true"
+          class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          Adjust Search
+        </button>
       </div>
     </div>
 
@@ -108,9 +199,10 @@
             <input
               type="checkbox"
               @change="toggleAllMembers"
-              :checked="selectedMembers.size === members.length && members.length > 0"
-              :indeterminate="selectedMembers.size > 0 && selectedMembers.size < members.length"
+              :checked="allFilteredMembersSelected"
+              :indeterminate="someFilteredMembersSelected"
               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              :disabled="filteredMembers.length === 0"
             />
           </div>
           <div class="col-span-2">First Name</div>
@@ -605,6 +697,9 @@ defineProps({
 // Reactive data
 const members = ref([])
 const searchQuery = ref('')
+const searchFields = ref(['first_name', 'last_name', 'email']) // Default search fields
+const searchMatchType = ref('includes') // 'includes' or 'exact'
+const showSearchOptions = ref(false) // Toggle for search options visibility
 const loading = ref(false)
 const loadingMessage = ref('')
 const showCsvModal = ref(false)
@@ -624,6 +719,17 @@ const memberEvents = ref([])
 const loadingMemberEvents = ref(false)
 
 // Computed properties
+const availableSearchFields = computed(() => [
+  { key: 'first_name', label: 'First Name' },
+  { key: 'last_name', label: 'Last Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'sms', label: 'Phone' },
+  { key: 'tags', label: 'Tags' },
+  { key: 'provider', label: 'Provider' },
+  { key: 'paid_via', label: 'Paid Via' },
+  { key: 'how_did_you_hear', label: 'How Heard' }
+])
+
 const filteredMembers = computed(() => {
   if (!searchQuery.value) return members.value
 
@@ -631,14 +737,18 @@ const filteredMembers = computed(() => {
   const searchTerms = searchQuery.value.toLowerCase().trim().split(/\s+/).filter(term => term.length > 0)
 
   return members.value.filter(member => {
-    // Check if any search term matches any field
-    return searchTerms.some(term =>
-      (member.first_name ? member.first_name.toLowerCase() : '').includes(term) ||
-      (member.last_name ? member.last_name.toLowerCase() : '').includes(term) ||
-      (member.email ? member.email.toLowerCase() : '').includes(term)
-    //   (member.sms ? member.sms.toLowerCase() : '').includes(term) ||
-    //   (member.tags ? member.tags.toLowerCase() : '').includes(term)
-    )
+    // Check if any search term matches any selected field
+    return searchTerms.some(term => {
+      return searchFields.value.some(fieldKey => {
+        const fieldValue = member[fieldKey] ? member[fieldKey].toLowerCase() : ''
+
+        if (searchMatchType.value === 'exact') {
+          return fieldValue === term
+        } else {
+          return fieldValue.includes(term)
+        }
+      })
+    })
   })
 })
 
@@ -648,6 +758,19 @@ const hasUnsavedChanges = computed(() => {
 
 const selectedMembersList = computed(() => {
   return members.value.filter(member => selectedMembers.value.has(member.id))
+})
+
+// Computed properties for filtered member selection
+const selectedFilteredMembers = computed(() => {
+  return filteredMembers.value.filter(member => selectedMembers.value.has(member.id))
+})
+
+const allFilteredMembersSelected = computed(() => {
+  return filteredMembers.value.length > 0 && selectedFilteredMembers.value.length === filteredMembers.value.length
+})
+
+const someFilteredMembersSelected = computed(() => {
+  return selectedFilteredMembers.value.length > 0 && selectedFilteredMembers.value.length < filteredMembers.value.length
 })
 
 const canMerge = computed(() => {
@@ -1045,10 +1168,16 @@ const toggleMember = (memberId) => {
 }
 
 const toggleAllMembers = () => {
-  if (selectedMembers.value.size === members.value.length) {
-    selectedMembers.value.clear()
+  if (allFilteredMembersSelected.value) {
+    // Unselect all filtered members
+    filteredMembers.value.forEach(member => {
+      selectedMembers.value.delete(member.id)
+    })
   } else {
-    selectedMembers.value = new Set(members.value.map(m => m.id))
+    // Select all filtered members
+    filteredMembers.value.forEach(member => {
+      selectedMembers.value.add(member.id)
+    })
   }
 }
 
@@ -1293,6 +1422,32 @@ const showNotification = (message, type = 'info') => {
     notifications.value = notifications.value.filter(n => n.id !== id)
   }, 5000)
 }
+
+// Search helper methods
+const resetSearchFilters = () => {
+  searchQuery.value = ''
+  searchFields.value = ['first_name', 'last_name', 'email']
+  searchMatchType.value = 'includes'
+}
+
+const selectAllSearchFields = () => {
+  searchFields.value = availableSearchFields.value.map(f => f.key)
+}
+
+const selectNoSearchFields = () => {
+  // Always keep at least one field selected
+  if (searchFields.value.length > 1) {
+    searchFields.value = ['first_name']
+  }
+}
+
+// Watchers
+watch(searchFields, (newFields) => {
+  // Ensure at least one field is always selected
+  if (newFields.length === 0) {
+    searchFields.value = ['first_name']
+  }
+}, { deep: true })
 
 // Lifecycle
 onMounted(() => {

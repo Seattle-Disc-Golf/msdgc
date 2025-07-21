@@ -9,9 +9,9 @@ description: |-
 organizer:
   - 174
 updated_by: 1
-updated_at: 1753071936
+updated_at: 1753072909
 start_time: '10:00'
 end_time: '14:00'
-symbol: 🪏
+symbol: 🛠️
 date_field: '2025-08-02'
 ---

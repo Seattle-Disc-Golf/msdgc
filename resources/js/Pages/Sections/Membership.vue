@@ -53,7 +53,7 @@
                             <nav v-if="canLogin" class="flex justify-center items-center gap-4">
                                 <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
                                    class="border border-white rounded-sm px-6 py-2 bangers bg-blue-500 hover:bg-blue-600 text-white text-4xl">
-                                {{ $page.props.auth?.user?.first_name || '' }}'s' Dashboard
+                                {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
                                 </Link>
                                 <template v-else>
                                     <Link :href="route('login')" class="border border-white rounded-sm px-6 py-2 bangers bg-blue-500 hover:bg-blue-600 text-white text-4xl">

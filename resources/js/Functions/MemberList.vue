@@ -633,11 +633,11 @@ const filteredMembers = computed(() => {
   return members.value.filter(member => {
     // Check if any search term matches any field
     return searchTerms.some(term =>
-      member.first_name?.toLowerCase().includes(term) ||
-      member.last_name?.toLowerCase().includes(term) ||
-      member.email?.toLowerCase().includes(term) ||
-      member.sms?.toLowerCase().includes(term) ||
-      member.tags?.toLowerCase().includes(term)
+      (member.first_name ? member.first_name.toLowerCase() : '').includes(term) ||
+      (member.last_name ? member.last_name.toLowerCase() : '').includes(term) ||
+      (member.email ? member.email.toLowerCase() : '').includes(term) ||
+      (member.sms ? member.sms.toLowerCase() : '').includes(term) ||
+      (member.tags ? member.tags.toLowerCase() : '').includes(term)
     )
   })
 })

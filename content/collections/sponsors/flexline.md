@@ -5,9 +5,9 @@ title: 'Flexline Discs'
 sponsor_name: Flexline
 web_site: 'https://flexlinediscs.com/'
 logo:
-  - flexline.svg
+  - flexlogosvg.svg
 updated_by: 1
-updated_at: 1752681891
+updated_at: 1753072625
 north_of_msdgc: false
 is_pro_shop: true
 udisc_link: 'https://udisc.com/stores/flexlinediscs-pro-shop-o6yS'

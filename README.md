@@ -5,6 +5,7 @@
 
 composer install
 npm install
+npm run build
 php artisan config:clear
 php artisan config:cache
 php please cache:clear

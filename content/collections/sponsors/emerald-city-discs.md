@@ -12,4 +12,5 @@ north_of_msdgc: false
 city_state: 'Lakewood, WA'
 nearby: 'Emerald City is a professional disc golf shop with a large inventory of discs and accessories. We are located 5-10 minutes from both Ralph Williamson Memorial (Lakewood) and SeaTac disc golf courses.'
 updated_by: 1
-updated_at: 1752699180
+updated_at: 1753071739
+---

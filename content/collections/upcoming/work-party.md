@@ -5,13 +5,13 @@ title: 'Work Party'
 description: |-
   Summer work party! Lunch will be served. 
 
-  Please check in at hole 2 to get your assignment.
+  Come lend a hand during the work party and stick around afterward for some casual doubles play!
 organizer:
   - 174
 updated_by: 1
-updated_at: 1753066877
+updated_at: 1753071936
 start_time: '10:00'
-end_time: '15:00'
+end_time: '14:00'
 symbol: 🪏
 date_field: '2025-08-02'
 ---

@@ -16,8 +16,8 @@
             <img src="images/north_parkers.jpg" class="w-full block object-cover" />
 
             <div class="club-name text-6xl font-bold text-zinc uppercase pb-4">
-                        $35 / year
-                    </div>
+                $35 / year
+            </div>
             <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
 
                 <div class="flex flex-col items-center md:items-start md:mr-8">
@@ -32,7 +32,8 @@
                     <ul class="flex flex-col gap-2">
                         <li>
                             Pay your $35 membership dues (cash,
-                            <a href="http://www.paypal.me/mineralspringsdgclub" target="_blank" class="text-blue-600 underline">PayPal</a>
+                            <a href="http://www.paypal.me/mineralspringsdgclub" target="_blank"
+                                class="text-blue-600 underline">PayPal</a>
                             or Zelle)
                         </li>
                         <li>
@@ -40,24 +41,51 @@
                         </li>
                         <li>
                             Email us if you have any questions regarding this process.<br />
-                            <a href="mailto:info@mineralspringsdgc.com" class="text-blue-600 underline">info@mineralspringsdgc.com</a>
+                            <a href="mailto:info@mineralspringsdgc.com"
+                                class="text-blue-600 underline">info@mineralspringsdgc.com</a>
                         </li>
                         <p>
-                            Thanks for considering and being a part of the club. Your membership gives you exclusive access to tag events & invitational tournaments, gives you a vote on club decisions and keeps you informed on events and work parties that help make the course more fun!
+                            Thanks for considering and being a part of the club. Your membership gives you exclusive
+                            access to tag events & invitational tournaments, gives you a vote on club decisions and
+                            keeps you informed on events and work parties that help make the course more fun!
                         </p>
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition uppercase bangers text-4xl mt-8">
-                            <a href="https://forms.gle/5b1d7c8f3e6c9b2y8" target="_blank" rel="noopener">Membership Form</a>
-                        </button>
+                        <div class="flex flex-col items-center mt-8">
+                            <nav v-if="canLogin" class="flex justify-center items-center gap-4">
+                                <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
+                                   class="border border-white rounded-sm px-6 py-2 bangers bg-blue-500 hover:bg-blue-600 text-white text-4xl">
+                                {{ $page.props.auth?.user?.name || 'Member Area' }} Profile
+                                </Link>
+                                <template v-else>
+                                    <Link :href="route('login')" class="border border-white rounded-sm px-6 py-2 bangers bg-blue-500 hover:bg-blue-600 text-white text-4xl">
+                                    Log in
+                                    </Link>
+                                    <Link v-if="canRegister" :href="route('register')" class="border border-white rounded-sm px-6 py-2 bangers bg-blue-500 hover:bg-blue-600 text-white text-4xl">
+                                    Register
+                                    </Link>
+                                </template>
+                            </nav>
+                        </div>
                     </ul>
                 </div>
             </div>
-            </div>
+        </div>
 
     </div>
 </template>
 
 <script setup>
-// No script logic needed for this static page
+import { Head, Link } from '@inertiajs/vue3';
+
+defineProps({
+    canLogin: {
+        type: Boolean,
+        default: true
+    },
+    canRegister: {
+        type: Boolean,
+        default: true
+    }
+});
 </script>
 
 <style scoped>

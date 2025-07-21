@@ -103,16 +103,20 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
         hero-subtitle="A Public Benefit Non-Profit Association" hero-background="/images/north_park_hole_1.jpg">
 
         <div class="bg-gray-100 dark:bg-zinc-900 basket-tile">
-            <div class="relative min-h-screen flex flex-col items-center selection:bg-[#FF2D20] selection:text-white">
+            <div class="relative min-h-screen flex flex-col items-center selection:bg-[#fafafa] selection:text-white">
                 <div class="relative w-full px-6 lg:max-w-7xl">
                     <main class="my-6">
                         <div class="grid grid-cols-1 gap-6">
                             <div class="grid grid-cols-1 xl:grid-cols-3  xl:gap-6">
                                 <!-- Monday Dubs Card - Full Width -->
-                                <MondayDubs class=" mb-6 xl:mb-0"/>
+                                <MondayDubs class="col-span-1"/>
+
+                                <div class="col-span-1 rounded-2xl bg-white shadow-lg p-6">
+                                    UPCOMING EVENTS
+                                    </div>
 
                                 <!-- Sponsors Section - 2 Column Layout -->
-                                <DiscGolfSponsors class="col-span-2" :sponsors="sponsors.items || []" />
+                                <DiscGolfSponsors class="col-span-1" :sponsors="sponsors.items || []" />
                             </div>
 
                             <section id="course" :class="cardStyle" class="bg-white">
@@ -147,7 +151,7 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                             </div>
 
                             <div id="membership" :class="cardStyle" class="bg-lime-300 squatch-tile">
-                                <Membership />
+                                <Membership :canLogin="canLogin" :canRegister="canRegister" />
                             </div>
 
                         </div>

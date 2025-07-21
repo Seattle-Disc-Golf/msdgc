@@ -95,7 +95,7 @@ function scrollToSection(sectionId) {
                     Us</a>
 
                 <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
-                {{ $page.props.auth?.user?.name || 'Member Area' }} Profile
+                {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
                 </Link>
 
                 <template v-else>
@@ -144,6 +144,8 @@ function scrollToSection(sectionId) {
                     <a @click="navigateToSection('lost-found')" class="cursor-pointer" :class="navStyle">Lost and Found</a>
                     <a @click="navigateToSection('membership')" class="cursor-pointer" :class="navStyle">Club Membership</a>
                     <Link :href="route('contact')" class="hidden xl:flex" :class="navStyle">Get Involved</Link>
+                    <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="hidden lg:flex" :class="navStyle">
+                        {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard</Link>
                 </nav>
             </header>
         </div>

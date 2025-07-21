@@ -52,7 +52,7 @@
                 <!-- Event Footer -->
                 <div class="px-6 pb-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-blue-600 text-sm font-medium">View Details →</span>
+                        <!-- <span class="text-blue-600 text-sm font-medium">View Details →</span> -->
                         <div class="relative">
                             <button @click.prevent.stop="toggleCalendarDropdown(event.id)"
                                     class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-medium transition-colors duration-200 flex items-center gap-1">

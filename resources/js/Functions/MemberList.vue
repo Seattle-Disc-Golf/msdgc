@@ -207,8 +207,8 @@
           </div>
           <div class="col-span-2">First Name</div>
           <div class="col-span-2">Last Name</div>
+          <div class="col-span-2">Email</div>
           <div class="col-span-2">Phone</div>
-          <div class="col-span-2">Provider</div>
           <div class="col-span-2">Events</div>
           <div class="col-span-1">Actions</div>
         </div>
@@ -259,6 +259,17 @@
                 />
               </div>
 
+              <!-- Email -->
+              <div class="col-span-2">
+                <input
+                  v-model="item.email"
+                  @input="markAsChanged(item)"
+                  type="email"
+                  class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Email"
+                />
+              </div>
+
               <!-- Phone -->
               <div class="col-span-2">
                 <input
@@ -268,22 +279,6 @@
                   class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Phone"
                 />
-              </div>
-
-              <!-- Provider -->
-              <div class="col-span-2">
-                <select
-                  v-model="item.provider"
-                  @change="markAsChanged(item)"
-                  class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Select</option>
-                  <option value="google">Google</option>
-                  <option value="facebook">Facebook</option>
-                  <option value="paypal">PayPal</option>
-                  <option value="cash">Cash</option>
-                  <option value="manual">Manual</option>
-                </select>
               </div>
 
               <!-- Events -->

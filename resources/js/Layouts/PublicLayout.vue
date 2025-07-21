@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 defineProps({
     title: {
@@ -42,6 +43,34 @@ defineProps({
 
 const navStyle = "text-lg"
 const headerStyle = "flex items-center justify-center"
+
+function navigateToSection(sectionId) {
+    // Check if we're on the home page
+    if (window.location.pathname === '/') {
+        // Already on home page, just scroll to section
+        scrollToSection(sectionId);
+    } else {
+        // Navigate to home page first, then scroll to section
+        router.visit('/', {
+            onSuccess: () => {
+                // Wait a bit for the page to load, then scroll to section
+                setTimeout(() => {
+                    scrollToSection(sectionId);
+                }, 100);
+            }
+        });
+    }
+}
+
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
 </script>
 
 <template>
@@ -107,16 +136,16 @@ const headerStyle = "flex items-center justify-center"
             <header v-if="showNavigation" :class="headerStyle" class="pt-6 text-white pr-4 px-4 py-1 lg:py-1 font-bold"
                 style="background-color: #3F8E28;">
                 <nav class="flex flex-wrap gap-4 lg:col-span-1 text-white justify-between items-center ">
-                    <a href="#course" class="hidden lg:flex" :class="navStyle">Course Map</a>
+                    <a @click="navigateToSection('course')" class="hidden lg:flex cursor-pointer" :class="navStyle">Course Map</a>
                     <span class="hidden lg:flex text-white/70">|</span>
                     <a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
                         :class="navStyle" target="_blank" rel="noopener">Calendar</a>
                     <span class="hidden lg:flex text-white/70">|</span>
                     <Link :href="route('board')" class="hidden lg:flex" :class="navStyle">Board</Link>
                     <span class="hidden lg:flex text-white/70">|</span>
-                    <a href="#lost-found" class="hidden lg:flex" :class="navStyle">Lost and Found</a>
+                    <a @click="navigateToSection('lost-found')" class="hidden lg:flex cursor-pointer" :class="navStyle">Lost and Found</a>
                     <span class="hidden lg:flex text-white/70">|</span>
-                    <a href="#membership" class="hidden lg:flex" :class="navStyle">Club Membership</a>
+                    <a @click="navigateToSection('membership')" class="hidden lg:flex cursor-pointer" :class="navStyle">Club Membership</a>
                     <span class="hidden lg:flex text-white/70">|</span>
                     <Link :href="route('contact')" class="hidden lg:flex" :class="navStyle">Get Involved</Link>
                 </nav>
@@ -140,11 +169,11 @@ const headerStyle = "flex items-center justify-center"
                 <div>
                     <h3 class="font-bold mb-3">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#course" class="hover:underline">Course Map</a></li>
+                        <li><a @click="navigateToSection('course')" class="hover:underline cursor-pointer">Course Map</a></li>
                         <li><a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles" target="_blank" rel="noopener" class="hover:underline">Calendar</a></li>
                         <li><Link :href="route('board')" class="hover:underline">Board</Link></li>
-                        <li><a href="#lost-found" class="hover:underline">Lost and Found</a></li>
-                        <li><a href="#membership" class="hover:underline">Club Membership</a></li>
+                        <li><a @click="navigateToSection('lost-found')" class="hover:underline cursor-pointer">Lost and Found</a></li>
+                        <li><a @click="navigateToSection('membership')" class="hover:underline cursor-pointer">Club Membership</a></li>
                         <li><Link :href="route('contact')" class="hover:underline">Get Involved</Link></li>
                     </ul>
                 </div>

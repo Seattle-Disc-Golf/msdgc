@@ -627,13 +627,19 @@ const loadingMemberEvents = ref(false)
 const filteredMembers = computed(() => {
   if (!searchQuery.value) return members.value
 
-  const query = searchQuery.value.toLowerCase()
-  return members.value.filter(member =>
-    member.first_name?.toLowerCase().includes(query) ||
-    member.last_name?.toLowerCase().includes(query) ||
-    member.email?.toLowerCase().includes(query) ||
-    member.sms?.toLowerCase().includes(query)
-  )
+  // Split search query by spaces to create OR search terms
+  const searchTerms = searchQuery.value.toLowerCase().trim().split(/\s+/).filter(term => term.length > 0)
+
+  return members.value.filter(member => {
+    // Check if any search term matches any field
+    return searchTerms.some(term =>
+      member.first_name?.toLowerCase().includes(term) ||
+      member.last_name?.toLowerCase().includes(term) ||
+      member.email?.toLowerCase().includes(term) ||
+      member.sms?.toLowerCase().includes(term) ||
+      member.tags?.toLowerCase().includes(term)
+    )
+  })
 })
 
 const hasUnsavedChanges = computed(() => {

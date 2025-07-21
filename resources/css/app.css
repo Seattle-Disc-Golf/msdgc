@@ -87,8 +87,8 @@ body {
 }
 
 .basket-tile {
-    background-image: url("/images/basket.svg");
-    background-size: 5%;
+    background-image: url("/images/basket.png");
+    background-size: 60px;
     background-repeat: repeat;
     background-attachment: fixed;
     /* transform: rotate(45deg); */

@@ -41,7 +41,7 @@ defineProps({
     },
 });
 
-const navStyle = "text-lg"
+const navStyle = "text-md py-1 md:py-0 hover:underline rounded-md transition-colors duration-200";
 const headerStyle = "flex items-center justify-center"
 
 function navigateToSection(sectionId) {
@@ -133,21 +133,17 @@ function scrollToSection(sectionId) {
                 </div>
             </header>
 
-            <header v-if="showNavigation" :class="headerStyle" class="pt-6 text-white pr-4 px-4 py-1 lg:py-1 font-bold"
+            <header v-if="showNavigation" :class="headerStyle" class=" text-white pr-4 px-4 py-1 lg:py-1 font-bold"
                 style="background-color: #3F8E28;">
-                <nav class="flex flex-wrap gap-4 lg:col-span-1 text-white justify-between items-center ">
-                    <a @click="navigateToSection('course')" class="hidden lg:flex cursor-pointer" :class="navStyle">Course Map</a>
-                    <span class="hidden lg:flex text-white/70">|</span>
+                <nav
+                    class="flex flex-col md:flex-row md:gap-6 lg:col-span-1 text-white justify-between items-center xl:items-center">
+                    <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Course Map</a>
                     <a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
                         :class="navStyle" target="_blank" rel="noopener">Calendar</a>
-                    <span class="hidden lg:flex text-white/70">|</span>
-                    <Link :href="route('board')" class="hidden lg:flex" :class="navStyle">Board</Link>
-                    <span class="hidden lg:flex text-white/70">|</span>
-                    <a @click="navigateToSection('lost-found')" class="hidden lg:flex cursor-pointer" :class="navStyle">Lost and Found</a>
-                    <span class="hidden lg:flex text-white/70">|</span>
-                    <a @click="navigateToSection('membership')" class="hidden lg:flex cursor-pointer" :class="navStyle">Club Membership</a>
-                    <span class="hidden lg:flex text-white/70">|</span>
-                    <Link :href="route('contact')" class="hidden lg:flex" :class="navStyle">Get Involved</Link>
+                    <Link :href="route('board')" class="" :class="navStyle">Board</Link>
+                    <a @click="navigateToSection('lost-found')" class="cursor-pointer" :class="navStyle">Lost and Found</a>
+                    <a @click="navigateToSection('membership')" class="cursor-pointer" :class="navStyle">Club Membership</a>
+                    <Link :href="route('contact')" class="hidden xl:flex" :class="navStyle">Get Involved</Link>
                 </nav>
             </header>
         </div>

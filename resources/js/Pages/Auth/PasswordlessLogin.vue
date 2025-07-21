@@ -14,6 +14,19 @@
             {{ status }}
         </div>
 
+        <!-- Show registration option when user not found -->
+        <div v-if="form.errors.email && form.errors.email.includes('can\'t find a user')" class="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md">
+            <p class="text-sm text-blue-800 dark:text-blue-200 mb-3">
+                It looks like you don't have an account yet. Would you like to create one?
+            </p>
+            <Link
+                :href="route('register', { email: form.identifier })"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+            >
+                Create Account
+            </Link>
+        </div>
+
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="type" value="Login Method" />
@@ -64,6 +77,7 @@
 
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3'
+import { onMounted } from 'vue'
 import AuthenticationCard from '@/Components/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import InputError from '@/Components/InputError.vue'
@@ -81,6 +95,17 @@ defineProps({
 const form = useForm({
     type: 'email',
     identifier: '',
+})
+
+// Fill email from URL parameter if present
+onMounted(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const emailParam = urlParams.get('email')
+
+    if (emailParam && emailParam.includes('@')) {
+        form.identifier = emailParam
+        form.type = 'email'
+    }
 })
 
 const submit = () => {

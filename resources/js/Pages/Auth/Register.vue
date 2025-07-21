@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -15,6 +16,16 @@ const form = useForm({
     password: '',
     password_confirmation: '',
     terms: false,
+});
+
+// Fill email from URL parameter if present
+onMounted(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+
+    if (emailParam && emailParam.includes('@')) {
+        form.email = emailParam;
+    }
 });
 
 const submit = () => {

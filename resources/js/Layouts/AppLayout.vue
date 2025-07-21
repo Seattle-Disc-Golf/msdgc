@@ -191,11 +191,9 @@ const logout = () => {
                                         <div class="border-t border-gray-200 dark:border-gray-600" />
 
                                         <!-- Authentication -->
-                                        <form @submit.prevent="logout">
-                                            <DropdownLink as="button">
-                                                Log Out
-                                            </DropdownLink>
-                                        </form>
+                                        <DropdownLink as="button" @click="logout">
+                                            Log Out
+                                        </DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
@@ -268,11 +266,9 @@ const logout = () => {
                             </ResponsiveNavLink>
 
                             <!-- Authentication -->
-                            <form method="POST" @submit.prevent="logout">
-                                <ResponsiveNavLink as="button">
-                                    Log Out
-                                </ResponsiveNavLink>
-                            </form>
+                            <ResponsiveNavLink as="button" @click="logout">
+                                Log Out
+                            </ResponsiveNavLink>
 
                             <!-- Team Management (Admin Only) -->
                             <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.auth.user.is_admin">

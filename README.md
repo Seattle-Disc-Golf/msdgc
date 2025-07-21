@@ -3,8 +3,13 @@
 
 ### Server notes
 
+composer install
+npm install
 php artisan config:clear
 php artisan config:cache
+php please cache:clear
+
+
 php artisan storage:link
 
 

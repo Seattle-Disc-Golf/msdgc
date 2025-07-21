@@ -15,7 +15,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::orderBy('created_at', 'desc')->paginate(15);
+        $events = Event::withCount('users')->orderBy('created_at', 'desc')->paginate(15);
 
         return Inertia::render('Events/Index', [
             'events' => $events

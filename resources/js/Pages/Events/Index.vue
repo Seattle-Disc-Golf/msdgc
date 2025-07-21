@@ -96,7 +96,7 @@ const formatAttrs = (attrs) => {
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             <div class="flex items-center">
-                                                <span class="mr-2">{{ event.users.length }}</span>
+                                                <span class="mr-2">{{ event.users_count }}</span>
                                                 <span class="text-gray-500">participants</span>
                                             </div>
                                         </td>

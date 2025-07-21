@@ -133,17 +133,17 @@ function scrollToSection(sectionId) {
                 </div>
             </header>
 
-            <header v-if="showNavigation" :class="headerStyle" class=" text-white pr-4 px-4 py-1 lg:py-1 font-bold"
+            <header v-if="showNavigation" :class="headerStyle" class=" text-white pr-4 px-4 py-1 lg:py-2 font-bold text-sm uppercase"
                 style="background-color: #3F8E28;">
                 <nav
                     class="flex flex-col md:flex-row md:gap-6 lg:col-span-1 text-white justify-between items-center xl:items-center">
                     <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Course Map</a>
                     <a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
                         :class="navStyle" target="_blank" rel="noopener">Calendar</a>
-                    <Link :href="route('board')" class="" :class="navStyle">Board</Link>
+                    <Link :href="route('board')" :class="navStyle">Board</Link>
                     <a @click="navigateToSection('lost-found')" class="cursor-pointer" :class="navStyle">Lost and Found</a>
                     <a @click="navigateToSection('membership')" class="cursor-pointer" :class="navStyle">Club Membership</a>
-                    <Link :href="route('contact')" class="hidden xl:flex" :class="navStyle">Get Involved</Link>
+                    <Link :href="route('contact')" :class="navStyle">Get Involved</Link>
                     <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="hidden lg:flex" :class="navStyle">
                         {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard</Link>
                 </nav>

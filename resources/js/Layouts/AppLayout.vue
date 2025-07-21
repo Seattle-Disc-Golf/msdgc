@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -13,6 +13,73 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const page = usePage();
+
+// Navigation items data
+const navigationItems = computed(() => {
+    const items = [
+        {
+            name: 'Back to Website',
+            route: 'home',
+            routeCheck: 'home',
+            icon: `<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 16l-4-4m0 0l4-4m-4 4h8" />`,
+            showForAll: true
+        },
+        {
+            name: `${page.props.auth?.user?.first_name || ''}'s Dashboard`,
+            route: 'dashboard',
+            routeCheck: 'dashboard',
+            icon: `<rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none" />
+                   <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none" />
+                   <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none" />
+                   <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" fill="none" />`,
+            showForAll: true
+        }
+    ];
+
+    // Add admin-only items
+    if (page.props.auth?.user?.is_admin) {
+        items.push(
+            {
+                name: 'Members',
+                route: 'members',
+                routeCheck: 'members',
+                icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M7 14c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V21h8.5M17 14c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V21h14v-1.5c0-2.33-4.67-3.5-7-3.5z" />`,
+                showForAll: false
+            },
+            {
+                name: 'Send Messages',
+                route: 'messages.index',
+                routeCheck: 'messages.*',
+                icon: `<rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none" />
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M3 5l9 7 9-7" />`,
+                showForAll: false
+            },
+            {
+                name: 'Events',
+                route: 'events.index',
+                routeCheck: 'events.*',
+                icon: `<rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none" />
+                       <circle cx="7" cy="12" r="1.5" stroke="currentColor" stroke-width="2" fill="none" />
+                       <circle cx="17" cy="12" r="1.5" stroke="currentColor" stroke-width="2" fill="none" />`,
+                showForAll: false
+            },
+            {
+                name: 'Website Editor',
+                route: null, // External link
+                href: '/cp',
+                routeCheck: null,
+                icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M16.862 3.487a2.25 2.25 0 113.182 3.182l-9.75 9.75a2.25 2.25 0 01-.878.547l-4.5 1.5a.75.75 0 01-.948-.948l1.5-4.5a2.25 2.25 0 01.547-.878l9.75-9.75z" />
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 19.5h-15" />`,
+                showForAll: false,
+                isExternal: true
+            }
+        );
+    }
+
+    return items;
+});
 
 const switchToTeam = (team) => {
     router.put(route('current-team.update'), {
@@ -39,7 +106,7 @@ const logout = () => {
             <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Profile Teams Menu -->
                 <div
-                    class="hidden sm:flex sm:items-center sm:justify-end sm:flex-1 max-w-7xl mx-auto w-full flex justify-end">
+                    class="hidden sm:flex sm:items-center sm:justify-end sm:flex-1 max-w-7xl mx-auto w-full py-0 md:p-3">
                     <!-- <div class="max-w-7xl mx-auto w-full flex justify-end"> -->
                     <div class="ms-3 relative">
                         <!-- Teams Dropdown (Admin Only) -->
@@ -175,85 +242,37 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('home')" :active="route().current('home')" custom>
-                                    <span class="inline-flex items-center">
-                                        <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"
-                                                fill="none" />
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M12 16l-4-4m0 0l4-4m-4 4h8" />
-                                        </svg>
-                                        Back to Website
-                                    </span>
-                                </NavLink>
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" custom>
-                                    <span class="inline-flex items-center">
-                                        <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                            <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor"
-                                                stroke-width="2" fill="none" />
-                                            <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor"
-                                                stroke-width="2" fill="none" />
-                                            <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor"
-                                                stroke-width="2" fill="none" />
-                                            <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor"
-                                                stroke-width="2" fill="none" />
-                                        </svg>
-                                    </span>
-                                    {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
-                                </NavLink>
-                                <template v-if="$page.props.auth.user.is_admin">
-                                    <NavLink :href="route('members')" :active="route().current('members')" custom>
+                                <template v-for="item in navigationItems" :key="item.name">
+                                    <!-- Regular NavLink for internal routes -->
+                                    <NavLink
+                                        v-if="!item.isExternal"
+                                        :href="item.route ? route(item.route) : '#'"
+                                        :active="item.routeCheck ? route().current(item.routeCheck) : false"
+                                        custom
+                                    >
                                         <span class="inline-flex items-center">
                                             <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M7 14c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V21h8.5M17 14c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V21h14v-1.5c0-2.33-4.67-3.5-7-3.5z" />
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                v-html="item.icon">
                                             </svg>
+                                            {{ item.name }}
                                         </span>
-                                        Members
                                     </NavLink>
 
-                                    <NavLink :href="route('messages.index')" :active="route().current('messages.*')"
-                                        custom>
-                                        <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor"
-                                                stroke-width="2" fill="none" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5l9 7 9-7" />
-                                        </svg>
-                                        Send Messages
-                                    </NavLink>
-
-                                    <NavLink :href="route('events.index')" :active="route().current('events.*')" custom>
+                                    <!-- External link -->
+                                    <a
+                                        v-else
+                                        class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 hover:border-b-2 transition duration-150 ease-in-out whitespace-nowrap"
+                                        :href="item.href"
+                                    >
                                         <span class="inline-flex items-center">
                                             <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                                <rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor"
-                                                    stroke-width="2" fill="none" />
-                                                <circle cx="7" cy="12" r="1.5" stroke="currentColor" stroke-width="2"
-                                                    fill="none" />
-                                                <circle cx="17" cy="12" r="1.5" stroke="currentColor" stroke-width="2"
-                                                    fill="none" />
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                v-html="item.icon">
                                             </svg>
+                                            {{ item.name }}
                                         </span>
-                                        Events
-                                    </NavLink>
-
-
-                                    <a class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 dark:text-gray-100  hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700  hover:border-b-2 transition duration-150 ease-in-out whitespace-nowrap"
-                                        href="/cp">
-                                          <span class="inline-flex items-center">
-                                            <svg class="me-1 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M16.862 3.487a2.25 2.25 0 113.182 3.182l-9.75 9.75a2.25 2.25 0 01-.878.547l-4.5 1.5a.75.75 0 01-.948-.948l1.5-4.5a2.25 2.25 0 01.547-.878l9.75-9.75z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M19.5 19.5h-15" />
-                                            </svg>
-                                        </span>
-                                        Website Editor</a>
+                                    </a>
                                 </template>
                             </div>
                         </div>
@@ -284,18 +303,23 @@ const logout = () => {
                 <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('members')" :active="route().current('members')">
-                            Members
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('messages.index')" :active="route().current('messages.*')">
-                            Send Messages
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('events.index')" :active="route().current('events.*')">
-                            Events
-                        </ResponsiveNavLink>
+                        <template v-for="item in navigationItems" :key="item.name">
+                            <ResponsiveNavLink
+                                v-if="!item.isExternal"
+                                :href="item.route ? route(item.route) : '#'"
+                                :active="item.routeCheck ? route().current(item.routeCheck) : false"
+                            >
+                                {{ item.name }}
+                            </ResponsiveNavLink>
+
+                            <a
+                                v-else
+                                class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                :href="item.href"
+                            >
+                                {{ item.name }}
+                            </a>
+                        </template>
                     </div>
 
                     <!-- Responsive Settings Options -->

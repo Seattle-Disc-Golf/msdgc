@@ -39,6 +39,10 @@ Route::get('/board/minutes/{id}', function (string $id) {
     ]);
 })->name('board.minutes.show');
 
+Route::get('/manage/preferences', function () {
+    return Inertia::render('Preferences');
+})->name('preferences');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

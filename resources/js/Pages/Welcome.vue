@@ -111,14 +111,12 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                     <main class="my-6">
                         <div class="grid grid-cols-1 gap-6">
                             <UpcomingEvents class="col-span-1" :upcoming_events="upcoming_events.items || []" />
-                            <div class="grid grid-cols-1 xl:grid-cols-3  xl:gap-6">
+                            <div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-6">
                                 <!-- Monday Dubs Card - Full Width -->
                                 <MondayDubs class="col-span-2" />
 
-
-
                                 <!-- Sponsors Section - 2 Column Layout -->
-                                <DiscGolfSponsors class="col-span-1" :sponsors="sponsors.items || []" />
+                                <DiscGolfSponsors class="col-span-1 pt-6 xl:pt-0" :sponsors="sponsors.items || []" />
                             </div>
 
                             <section id="course" :class="cardStyle" class="bg-white">

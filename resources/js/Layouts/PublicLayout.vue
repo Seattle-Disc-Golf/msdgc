@@ -43,17 +43,16 @@ defineProps({
 
 const navStyle = "text-md py-1 md:py-0 hover:underline rounded-md transition-colors duration-200";
 const headerStyle = "flex items-center justify-center"
-
 function navigateToSection(sectionId) {
     // Check if we're on the home page
     if (window.location.pathname === '/') {
-        // Already on home page, just scroll to section
+        // Update the URL hash and scroll to section
+        window.location.hash = sectionId;
         scrollToSection(sectionId);
     } else {
-        // Navigate to home page first, then scroll to section
-        router.visit('/', {
+        // Navigate to home page with hash, then scroll to section
+        router.visit('/#' + sectionId, {
             onSuccess: () => {
-                // Wait a bit for the page to load, then scroll to section
                 setTimeout(() => {
                     scrollToSection(sectionId);
                 }, 100);
@@ -79,12 +78,9 @@ function scrollToSection(sectionId) {
         <Head :title="title" />
 
         <!-- Public Header Navigation -->
-        <header
-            :class="['flex justify-between items-center text-white pr-4 px-4 py-4 lg:py-2 font-bold']"
-            :style="appDebug
-                ? 'background: repeating-linear-gradient(135deg, rgb(43 127 255)  0 20px, rgb(105 162 249) 20px 40px);'
-                : 'background-color: #3477F4;'"
-        >
+        <header :class="['flex justify-between items-center text-white pr-4 px-4 py-4 lg:py-2 font-bold']" :style="appDebug
+            ? 'background: repeating-linear-gradient(135deg, rgb(43 127 255)  0 20px, rgb(105 162 249) 20px 40px);'
+            : 'background-color: #3477F4;'">
             <Link href="/">
             <img src="/images/msdgc_logo.png" alt="MSDGC Logo" class="h-8 w-auto pr-4 self-start sm:self-center" />
             </Link>
@@ -94,7 +90,8 @@ function scrollToSection(sectionId) {
                     class="flex items-center bg-white inset text-blue-500 rounded-sm px-3 mr-4 bangers text-lg">Contact
                     Us</a>
 
-                <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
+                <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
+                    class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
                 {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
                 </Link>
 
@@ -133,19 +130,24 @@ function scrollToSection(sectionId) {
                 </div>
             </header>
 
-            <header v-if="showNavigation" :class="headerStyle" class=" text-white pr-4 px-4 py-1 lg:py-2 font-bold text-sm uppercase"
+            <header v-if="showNavigation" :class="headerStyle"
+                class=" text-white pr-4 px-4 py-1 lg:py-2 font-bold text-sm uppercase"
                 style="background-color: #3F8E28;">
                 <nav
                     class="flex flex-col md:flex-row md:gap-6 lg:col-span-1 text-white justify-between items-center xl:items-center">
-                    <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Course Map</a>
+                    <a @click="navigateToSection('sponsors')" class="cursor-pointer" :class="navStyle">Sponsors</a>
+
+                    <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Map</a>
                     <a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
                         :class="navStyle" target="_blank" rel="noopener">Calendar</a>
                     <Link :href="route('board')" :class="navStyle">Board</Link>
-                    <a @click="navigateToSection('lost-found')" class="cursor-pointer" :class="navStyle">Lost and Found</a>
-                    <a @click="navigateToSection('membership')" class="cursor-pointer" :class="navStyle">Club Membership</a>
-                    <Link :href="route('contact')" :class="navStyle">Get Involved</Link>
-                    <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="hidden lg:flex" :class="navStyle">
-                        {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard</Link>
+                    <a @click="navigateToSection('lost-found')" class="cursor-pointer" :class="navStyle">Lost and
+                        Found</a>
+                    <a @click="navigateToSection('membership')" class="cursor-pointer" :class="navStyle">Membership</a>
+                    <!-- <Link :href="route('contact')" :class="navStyle">Get Involved</Link> -->
+                    <Link v-if="$page.props.auth?.user" :href="route('dashboard')" class="hidden lg:flex"
+                        :class="navStyle">
+                    {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard</Link>
                 </nav>
             </header>
         </div>
@@ -161,26 +163,40 @@ function scrollToSection(sectionId) {
                 <div>
                     <h3 class="font-bold mb-3">About</h3>
                     <p>
-                        Mineral Springs Disc Golf Club is a public benefit non-profit association dedicated to promoting disc golf and community engagement.
+                        Mineral Springs Disc Golf Club is a public benefit non-profit association dedicated to promoting
+                        disc
+                        golf and community engagement.
                     </p>
                 </div>
                 <div>
                     <h3 class="font-bold mb-3">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a @click="navigateToSection('course')" class="hover:underline cursor-pointer">Course Map</a></li>
-                        <li><a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles" target="_blank" rel="noopener" class="hover:underline">Calendar</a></li>
-                        <li><Link :href="route('board')" class="hover:underline">Board</Link></li>
-                        <li><a @click="navigateToSection('lost-found')" class="hover:underline cursor-pointer">Lost and Found</a></li>
-                        <li><a @click="navigateToSection('membership')" class="hover:underline cursor-pointer">Club Membership</a></li>
-                        <li><Link :href="route('contact')" class="hover:underline">Get Involved</Link></li>
+                        <li><a @click="navigateToSection('course')" class="hover:underline cursor-pointer">Course
+                                Map</a></li>
+                        <li><a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
+                                target="_blank" rel="noopener" class="hover:underline">Calendar</a></li>
+                        <li>
+                            <Link :href="route('board')" class="hover:underline">Board</Link>
+                        </li>
+                        <li><a @click="navigateToSection('lost-found')" class="hover:underline cursor-pointer">Lost and
+                                Found</a></li>
+                        <li><a @click="navigateToSection('membership')" class="hover:underline cursor-pointer">Club
+                                Membership</a></li>
+                        <li>
+                            <Link :href="route('contact')" class="hover:underline">Get Involved</Link>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-bold mb-3">Contact</h3>
-                    <p>Email: <a href="mailto:info@mineralspringsdgc.com" class="hover:underline">info@mineralspringsdgc.com</a></p>
-                    <p class="mt-2">&copy; {{ new Date().getFullYear() }} Mineral Springs Disc Golf Club. All rights reserved.</p>
+                    <p>Email: <a href="mailto:info@mineralspringsdgc.com"
+                            class="hover:underline">info@mineralspringsdgc.com</a>
+                    </p>
+                    <p class="mt-2">&copy; {{ new Date().getFullYear() }} Mineral Springs Disc Golf Club. All rights
+                        reserved.
+                    </p>
                 </div>
             </div>
         </footer>
-        </div>
+    </div>
 </template>

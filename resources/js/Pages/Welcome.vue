@@ -125,7 +125,7 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                                 <Course />
                             </section>
 
-                            <LocalSponsors :sponsors="non_pro_shop_sponsors" />
+                            <LocalSponsors id="sponsors" :sponsors="non_pro_shop_sponsors" />
 
 
                             <section id="calendar" :class="cardStyle" class="bg-blue-200 squatch-tile">

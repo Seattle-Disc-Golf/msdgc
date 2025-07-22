@@ -1,7 +1,7 @@
 <template>
     <div v-if="upcoming_events.length > 0">
 
-        <div class="bangers text-4xl font-bold text-black p-4">
+        <div class="bangers text-4xl font-bold text-black dark:text-white p-4">
             Upcoming Events
         </div>
 

@@ -47,6 +47,10 @@ Route::get('/payment_qr_links', function () {
     return Inertia::render('PaymentQrLinks');
 })->name('payment.qr.links');
 
+Route::get('/lost-and-found', function () {
+    return redirect('/#lost-found');
+})->name('lost-and-found');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

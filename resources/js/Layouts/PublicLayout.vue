@@ -85,26 +85,32 @@ function scrollToSection(sectionId) {
             <img src="/images/msdgc_logo.png" alt="MSDGC Logo" class="h-8 w-auto pr-4 self-start sm:self-center" />
             </Link>
 
-            <nav v-if="canLogin" class="mx-3 flex justify-end">
-                <a href="mailto:info@mineralspringsdgc.com"
-                    class="flex items-center bg-white inset text-blue-500 rounded-sm px-3 mr-4 bangers text-lg">Contact
-                    Us</a>
+            <div class="mx-3 flex justify-end">
+                <Link :href="route('payment.qr.links')" :class="navStyle"   class="text-lg border border-white rounded-sm px-3 bangers bg-white text-blue-500" >Click Here to Pay</Link>
 
-                <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
-                    class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
-                {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
-                </Link>
 
-                <template v-else>
-                    <Link :href="route('login')" :class="navStyle">
-                    Log in
+                <nav v-if="canLogin" class="mx-3 flex justify-end">
+                    <a href="mailto:info@mineralspringsdgc.com"
+                        class="flex items-center bg-white inset text-blue-500 rounded-sm px-3 mr-4 bangers text-lg">Contact
+                        Us</a>
+
+                    <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
+                        class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
+                    {{ $page.props.auth?.user?.first_name || '' }}'s Dashboard
                     </Link>
-                    <div class="mx-4">|</div>
-                    <Link v-if="canRegister" :href="route('register')" :class="navStyle">
-                    Register
-                    </Link>
-                </template>
-            </nav>
+
+                    <template v-else>
+                        <Link :href="route('login')" :class="navStyle">
+                        Log in
+                        </Link>
+                        <div class="mx-4">|</div>
+                        <Link v-if="canRegister" :href="route('register')" :class="navStyle">
+                        Register
+                        </Link>
+                    </template>
+                </nav>
+            </div>
+
         </header>
 
         <!-- Hero Section (conditional) -->
@@ -137,7 +143,7 @@ function scrollToSection(sectionId) {
                     class="flex flex-col md:flex-row md:gap-6 lg:col-span-1 text-white justify-between items-center xl:items-center">
                     <a @click="navigateToSection('sponsors')" class="cursor-pointer" :class="navStyle">Sponsors</a>
 
-                    <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Map</a>
+                    <a @click="navigateToSection('course')" class="cursor-pointer" :class="navStyle">Course Map</a>
                     <a href="https://calendar.google.com/calendar/u/0/embed?src=495b1ab477f0effe46de4b97a8ae37ab1229210525dba1f4b8a558828ae8387f@group.calendar.google.com&ctz=America/Los_Angeles"
                         :class="navStyle" target="_blank" rel="noopener">Calendar</a>
                     <Link :href="route('board')" :class="navStyle">Board</Link>

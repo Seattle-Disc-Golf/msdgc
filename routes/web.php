@@ -43,6 +43,10 @@ Route::get('/manage/preferences', function () {
     return Inertia::render('Preferences');
 })->name('preferences');
 
+Route::get('/payment_qr_links', function () {
+    return Inertia::render('PaymentQrLinks');
+})->name('payment.qr.links');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

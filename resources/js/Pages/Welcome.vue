@@ -70,7 +70,15 @@ onMounted(async () => {
         console.error('Error fetching upcoming_events:', error);
     }
 
-
+    // Handle hash navigation after content is loaded
+    if (window.location.hash) {
+        setTimeout(() => {
+            const element = document.querySelector(window.location.hash);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 500); // Wait a bit for content to fully render
+    }
 });
 
 function handleImageError() {

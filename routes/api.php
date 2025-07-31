@@ -10,7 +10,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Member management API routes (using Sanctum with session authentication)
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
     Route::apiResource('members', MemberController::class, ['parameters' => ['members' => 'member']]);
     Route::post('/members/bulk-import', [MemberController::class, 'bulkImport']);
 

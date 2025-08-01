@@ -41,7 +41,7 @@ defineProps({
     },
 });
 
-const navStyle = "text-md py-1 md:py-0 hover:underline rounded-md transition-colors duration-200";
+const navStyle = "text-md hover:underline rounded-md transition-colors duration-200";
 const headerStyle = "flex items-center justify-center"
 function navigateToSection(sectionId) {
     // Check if we're on the home page
@@ -86,13 +86,14 @@ function scrollToSection(sectionId) {
             </Link>
 
             <div class="mx-3 flex justify-end">
-                <Link :href="route('payment.qr.links')" :class="navStyle"   class="text-lg border border-white rounded-sm px-3 bangers bg-white text-blue-500" >Click Here to Pay</Link>
+                <Link :href="route('payment.qr.links')" :class="navStyle"
+                    class="border border-white rounded-sm px-2 bg-white text-blue-500">Pay</Link>
 
+                    <a href="mailto:info@mineralspringsdgc.com"
+                    class="flex items-center bg-white inset text-blue-500 rounded-sm px-2 mx-2 md:mx-6">Contact</a>
 
                 <nav v-if="canLogin" class="mx-3 flex justify-end">
-                    <a href="mailto:info@mineralspringsdgc.com"
-                        class="flex items-center bg-white inset text-blue-500 rounded-sm px-3 mr-4 bangers text-lg">Contact
-                        Us</a>
+
 
                     <Link v-if="$page.props.auth?.user" :href="route('dashboard')"
                         class="border border-white rounded-sm px-3 bangers bg-blue-500 hover:bg-blue-600">
@@ -103,7 +104,7 @@ function scrollToSection(sectionId) {
                         <Link :href="route('login')" :class="navStyle">
                         Log in
                         </Link>
-                        <div class="mx-4">|</div>
+                        <div class="mx-2">|</div>
                         <Link v-if="canRegister" :href="route('register')" :class="navStyle">
                         Register
                         </Link>

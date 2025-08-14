@@ -4,7 +4,7 @@ blueprint: board_member
 title: 'Rowan Christmas'
 club_title: Director
 updated_by: 1
-updated_at: 1754696771
+updated_at: 1755143068
 roles:
-  - TD
+  - Outreach
 ---

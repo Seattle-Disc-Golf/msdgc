@@ -3,9 +3,9 @@ id: 2f9072b3-4798-4c1e-991c-dbd4ea60432a
 blueprint: dubs
 title: 'Monday Dubs'
 updated_by: 1
-updated_at: 1753071848
+updated_at: 1757907292
 header1: 'Monday Dubs!!'
-paragraph_1: 'This week 5:45pm Check Facebook for the latest.'
+paragraph_1: 'This week SIGN IN BY 5:00pm Check Facebook for the latest.'
 header2_color: '#ffffff'
 header2: IMPORTANT
 paragraph2: |-

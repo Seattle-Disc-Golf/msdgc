@@ -118,20 +118,20 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                 <div class="relative w-full px-6 lg:max-w-7xl">
                     <main class="my-6">
                         <div class="grid grid-cols-1 gap-6">
-                            <!-- <UpcomingEvents class="col-span-1" :upcoming_events="upcoming_events.items || []" /> -->
+                            <UpcomingEvents class="col-span-1" :upcoming_events="upcoming_events.items || []" />
                             <div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-6">
                                 <!-- Monday Dubs Card - Full Width -->
-                                <!-- <MondayDubs class="col-span-2" /> -->
+                                <MondayDubs class="col-span-2" />
 
                                 <!-- Sponsors Section - 2 Column Layout -->
-                                <!-- <DiscGolfSponsors class="col-span-1 pt-6 xl:pt-0" :sponsors="sponsors.items || []" /> -->
+                                <DiscGolfSponsors class="col-span-1 pt-6 xl:pt-0" :sponsors="sponsors.items || []" />
                             </div>
 
                             <section id="course" :class="cardStyle" class="bg-white">
                                 <Course />
                             </section>
 
-                            <!-- <LocalSponsors id="sponsors" :sponsors="non_pro_shop_sponsors" /> -->
+                            <LocalSponsors id="sponsors" :sponsors="non_pro_shop_sponsors" />
 
 
                             <section id="calendar" :class="cardStyle" class="bg-blue-200 squatch-tile">
@@ -157,13 +157,13 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                                 </div>
                             </section>
 
-                            <!-- <div id="lost-found" :class="cardStyle" class="bg-amber-300 squatch-tile">
+                            <div id="lost-found" :class="cardStyle" class="bg-amber-300 squatch-tile">
                                 <LostFound />
-                            </div> -->
+                            </div>
 
-                            <!-- <div id="membership" :class="cardStyle" class="bg-lime-300 squatch-tile">
+                            <div id="membership" :class="cardStyle" class="bg-lime-300 squatch-tile">
                                 <Membership :canLogin="canLogin" :canRegister="canRegister" />
-                            </div> -->
+                            </div>
 
                         </div>
                     </main>

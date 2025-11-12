@@ -6,6 +6,28 @@ import QRCodeLink from '@/MSDGCComponents/QRCodeLink.vue';
 
 const paymentMethods = ref([
     {
+        id: 1,
+        name: "Zeffy",
+        url: "https://www.zeffy.com/en-US/ticketing/msdgc-sales",
+        logo: '/images/logos/zeffy_logo.png',
+        qrCodeUrl: '/images/qr/qr_zeffy.png', // Placeholder path
+        backgroundColor: 'bg-teal-50',
+        description: "PREFFERED. Optionally avoid credit card fees with Zeffy.",
+    },
+
+    {
+        id: 3,
+        name: 'PayPal',
+        text: "",
+        username: false,
+        logo: '/images/logos/paypal_logo.png',
+        url: 'https://www.paypal.com/ncp/payment/8VD3LCHZ22ZKU',
+        qrCodeUrl: '/images/qr/qr_paypal.png', // Placeholder path
+        backgroundColor: 'bg-blue-50',
+        borderColor: 'border-blue-800',
+        description: "Allows PayPal, Venmo or Credit/Debit Card payments."
+    },
+    {
         id: 2,
         name: 'Zelle',
         text: "Payee: ",
@@ -17,19 +39,8 @@ const paymentMethods = ref([
         borderColor: 'border-purple-200'
     },
     {
-        id: 3,
-        name: 'PayPal',
-        text: "",
-        username: false,
-        logo: '/images/logos/paypal_logo.png',
-        url: 'https://paypal.me/MineralSpringsDGclub',
-        qrCodeUrl: '/images/qr/qr_paypal.png', // Placeholder path
-        backgroundColor: 'bg-blue-50',
-        borderColor: 'border-blue-800'
-    },
-    {
         id: 4,
-        name: 'Pay In Person',
+        name: 'Pay with Cash at the Course',
         username: false,
         qrCodeUrl: '/images/qr/qr_northparkhq.png', // Placeholder path
         backgroundColor: 'bg-green-50',
@@ -58,7 +69,7 @@ const otherLinks = ref([
         backgroundColor: 'bg-blue-50',
         borderColor: 'border-blue-200'
     },
-          {
+    {
         id: 2,
         name: 'Contact Us',
         description: "Send us a quick message by completing this contact form!",

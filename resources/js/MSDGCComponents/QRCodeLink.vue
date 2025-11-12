@@ -1,17 +1,17 @@
 <template>
-    <div :class="[
-        'bg-white rounded-lg shadow-lg border-2 transition-transform duration-200',
+    <a class="cursor-pointer border rounded-md" :href="method.url" target="_blank" rel="noopener noreferrer" :class="[
         method.borderColor
     ]">
         <div :class="['block rounded-lg hover:shadow-xl transition-shadow duration-200']">
             <div :class="['p-6 rounded-t-lg', method.backgroundColor]" class="h-40">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <img v-if="method.logo" :src="method.logo" alt="Logo" class="h-8">
-                        <h3 class="text-2xl font-bold text-gray-900">{{ method.name }}</h3>
-                    </div>
+                <div class="flex items-center justify-center">
+                    <img v-if="method.logo" :src="method.logo" alt="Logo" class="h-20 w-auto object-contain">
+                    <h3 v-else class="text-2xl font-bold text-gray-900">{{ method.name }}</h3>
                 </div>
-                <div v-if="method.username" class="flex items-center space-x-2">
+                <div v-if="method.description" class="mt-2 text-gray-600">
+                    {{ method.description }}
+                </div>
+                <div v-if="method.username" class="flex items-center space-x-2 pt-2">
                     <span class="font-medium text-gray-700">{{ method.text || 'Username:' }}</span>
                     <code class="bg-white px-2 py-1 rounded text-sm font-mono">{{ method.username }}</code>
                     <button @click.stop.prevent="copyToClipboard(method.username)"
@@ -23,24 +23,27 @@
                         </svg>
                     </button>
                 </div>
-                <div v-if="method.description" class="mt-2 text-gray-600">
-                    {{ method.description }}
-                </div>
-                <div v-else class="text-gray-600 mt-2">
+                <div v-else>
                     &nbsp;
                 </div>
+
+
+
             </div>
-            <a class="cursor-pointer p-6" :href="method.url" target="_blank" rel="noopener noreferrer">
+            <div class="pt-6">
                 <div class="flex flex-col items-center">
-                    <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center  mb-4">
                         <div class="text-center text-gray-500">
                             <img :src="method.qrCodeUrl" alt="QR Code" class="w-full">
                         </div>
                     </div>
                 </div>
-            </a>
+
+
+            </div>
+
         </div>
-    </div>
+    </a>
 </template>
 
 <script setup>

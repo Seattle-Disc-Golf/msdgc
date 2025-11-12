@@ -56,8 +56,9 @@
 
 body {
     /* @apply text-lg lg:text-xl; */
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 16px;
 }
 
 .card-header {
@@ -77,7 +78,6 @@ body {
     font-family: "Bangers", system-ui;
     font-weight: 400;
     font-style: normal;
-
 }
 
 .bangers {

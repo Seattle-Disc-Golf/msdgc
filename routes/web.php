@@ -1,17 +1,18 @@
 <?php
 
+use App\Http\Controllers\PasswordlessLoginController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\PasswordlessLoginController;
 
 // Custom GET logout route to avoid CSRF issues
 Route::get('/logout-get', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
+
     return redirect('/')->with('_reload', true);
 })->middleware('auth')->name('logout.get');
 
@@ -107,3 +108,27 @@ Route::post('/complete-signup/{token}', [PasswordlessLoginController::class, 'co
 Route::post('/resend-passwordless-link', [PasswordlessLoginController::class, 'resendLink'])
     ->middleware(['guest', 'throttle:3,1'])
     ->name('passwordless.resend-link');
+
+// // Handle /membership explicitly (Statamic would otherwise handle this and return 404)
+// Route::get('/membership', function () {
+//     return redirect('/');
+// });
+
+// Source - https://stackoverflow.com/a
+// Posted by rozsazoltan, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-24, License - CC BY-SA 4.0
+
+Route::fallback(function () {
+    $requestUri = request()->path();
+    Log::info('Fallback triggered for URI: '.$requestUri);
+
+    // If the URL ends with .php, remove the extension and redirect
+    if (str_ends_with($requestUri, '.php')) {
+        $newUri = substr($requestUri, 0, -4); // Remove the .php extension
+
+        return redirect($newUri, 301); // Redirect to the new URL without .php
+    }
+
+    // If no matching route is found, redirect to the homepage
+    return redirect('/');
+});

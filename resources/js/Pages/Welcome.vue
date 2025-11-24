@@ -33,7 +33,6 @@ defineProps({
 import { ref, onMounted } from 'vue';
 
 const sponsors = ref([]);
-const minutes = ref([]);
 
 const non_pro_shop_sponsors = ref([]);
 const upcoming_events = ref([]);

@@ -21,7 +21,8 @@
                                 {{ dayjs(event.date_field).format('dddd') }} {{ formatEventDate(event.date_field) }}
                             </div>
                             <div class="text-md" v-if="event.start_time || event.end_time">
-                                {{ formatTime(event.start_time) }}{{ event.end_time ? ' - ' + formatTime(event.end_time) : '' }}
+                                {{ formatTime(event.start_time) }}{{ event.end_time ? ' - ' + formatTime(event.end_time)
+                                    : '' }}
                             </div>
                         </div>
                     </div>
@@ -29,9 +30,12 @@
 
                 <!-- Event Content -->
                 <div class="p-6 flex-grow">
-                    <h3 class="text-3xl font-semibold text-zinc-700 mb-3 line-clamp-2 bangers">
-                        {{ event.title }}
-                    </h3>
+                    <a :href="event.link_field" target="_blank" rel="noopener noreferrer">
+                        <h3 class="text-3xl font-semibold mb-3 line-clamp-2 bangers"
+                            :class="event.link_field ? 'text-blue-600 underline' : 'text-zinc-700'">
+                            {{ event.title }}
+                        </h3>
+                    </a>
 
                     <div class="space-y-2 mb-4">
                         <div v-if="event.location" class="flex items-center text-gray-600">
@@ -55,32 +59,35 @@
                         <!-- <span class="text-blue-600 text-sm font-medium">View Details →</span> -->
                         <div class="relative">
                             <button @click.prevent.stop="toggleCalendarDropdown(event.id)"
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-medium transition-colors duration-200 flex items-center gap-1">
+                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-medium transition-colors duration-200 flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 Add to Calendar
                                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
                                 </svg>
                             </button>
 
                             <!-- Calendar dropdown positioned above -->
-                            <div v-if="activeDropdown === event.id"
-                                 @click.stop
-                                 class="absolute bottom-full right-0 mb-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[150px] py-1">
+                            <div v-if="activeDropdown === event.id" @click.stop
+                                class="absolute bottom-full right-0 mb-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[150px] py-1">
                                 <button @click.prevent.stop="addToGoogleCalendar(event)"
-                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
+                                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
                                     <span class="text-blue-600">📅</span>
                                     Google Calendar
                                 </button>
                                 <button @click.prevent.stop="addToAppleCalendar(event)"
-                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
+                                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
                                     <span class="text-gray-800">🍎</span>
                                     Apple Calendar
                                 </button>
                                 <button @click.prevent.stop="addToOutlookCalendar(event)"
-                                        class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
+                                    class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-gray-700">
                                     <span class="text-blue-800">📧</span>
                                     Outlook
                                 </button>

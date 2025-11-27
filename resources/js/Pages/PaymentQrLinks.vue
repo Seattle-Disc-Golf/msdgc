@@ -109,6 +109,19 @@ const copyToClipboard = async (text) => {
     <PublicLayout :showHero="false">
         <div class="min-h-screen bg-gray-50 py-12">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <a href=" https://www.zeffy.com/en-US/ticketing/2026-membership-6" target="_blank">
+
+                    <div
+                        class="flex items-center gap-3 p-6 bg-white shadow rounded-md mb-12 hover:bg-blue-100 transition-colors">
+                        <img src="/images/tags.jpg" class="w-50" />
+
+                        <h1 class="text-4xl font-bold text-blue-900 mb-4">
+                            Buy Membership Here
+                        </h1>
+                    </div>
+                </a>
+
                 <!-- Header -->
                 <div class="text-center mb-12">
                     <h1 class="text-4xl font-bold text-gray-900 mb-4">Payment Options</h1>

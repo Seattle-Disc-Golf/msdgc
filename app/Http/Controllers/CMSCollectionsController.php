@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\Yaml\Yaml;
 use League\CommonMark\CommonMarkConverter;
+use Symfony\Component\Yaml\Yaml;
 
 class CMSCollectionsController extends Controller
 {
@@ -17,11 +16,11 @@ class CMSCollectionsController extends Controller
         $collectionPath = base_path("content/collections/{$collection}");
         $items = [];
 
-        if (!is_dir($collectionPath)) {
+        if (! is_dir($collectionPath)) {
             return response()->json(['error' => "Collection '{$collection}' not found"], 404);
         }
 
-        $files = glob($collectionPath . '/*.md');
+        $files = glob($collectionPath.'/*.md');
 
         foreach ($files as $file) {
             $item = $this->parseMarkdownFile($file);
@@ -33,11 +32,19 @@ class CMSCollectionsController extends Controller
         // Sort items based on tree ordering if available
         $items = $this->sortItemsByTreeOrder($collection, $items);
 
+        // Filter out unpublished items
+        $items = array_filter($items, function ($item) {
+            return ! isset($item['published']) || $item['published'] !== false;
+        });
+
+        // Re-index array after filtering
+        $items = array_values($items);
+
         return response()->json([
             'success' => true,
             'collection' => $collection,
             'count' => count($items),
-            'items' => $items
+            'items' => $items,
         ]);
     }
 
@@ -48,11 +55,11 @@ class CMSCollectionsController extends Controller
     {
         $collectionPath = base_path("content/collections/{$collection}");
 
-        if (!is_dir($collectionPath)) {
+        if (! is_dir($collectionPath)) {
             return response()->json(['error' => "Collection '{$collection}' not found"], 404);
         }
 
-        $files = glob($collectionPath . '/*.md');
+        $files = glob($collectionPath.'/*.md');
 
         foreach ($files as $file) {
             $item = $this->parseMarkdownFile($file);
@@ -64,7 +71,7 @@ class CMSCollectionsController extends Controller
                 return response()->json([
                     'success' => true,
                     'collection' => $collection,
-                    'item' => $item
+                    'item' => $item,
                 ]);
             }
         }
@@ -79,7 +86,7 @@ class CMSCollectionsController extends Controller
     {
         $content = file_get_contents($filePath);
 
-        if (!$content) {
+        if (! $content) {
             return null;
         }
 
@@ -93,11 +100,11 @@ class CMSCollectionsController extends Controller
                 $data = Yaml::parse($frontmatter);
 
                 // Add the markdown body if it exists
-                if (!empty($body)) {
+                if (! empty($body)) {
                     $data['content'] = $body;
 
                     // Convert markdown to HTML
-                    $converter = new CommonMarkConverter();
+                    $converter = new CommonMarkConverter;
                     $data['content_html'] = $converter->convert($body)->getContent();
                 }
 
@@ -130,8 +137,8 @@ class CMSCollectionsController extends Controller
 
         foreach ($imageFields as $field) {
             if (isset($data[$field]) && is_array($data[$field])) {
-                $data[$field] = array_map(function($imageFile) {
-                    return asset('storage/' . $imageFile);
+                $data[$field] = array_map(function ($imageFile) {
+                    return asset('storage/'.$imageFile);
                 }, $data[$field]);
             }
         }
@@ -142,28 +149,31 @@ class CMSCollectionsController extends Controller
      */
     private function convertMarkdownFields(array &$data): void
     {
-        $converter = new CommonMarkConverter();
+        $converter = new CommonMarkConverter;
 
         // Fields that should be converted from markdown to HTML
         $markdownFields = ['content', 'financial_report', 'old_business', 'new_business', 'announcements'];
 
         foreach ($markdownFields as $field) {
-            if (isset($data[$field]) && is_string($data[$field]) && !empty($data[$field])) {
+            if (isset($data[$field]) && is_string($data[$field]) && ! empty($data[$field])) {
                 // Convert markdown to HTML and store it
                 $data[$field] = $converter->convert($data[$field])->getContent();
             }
         }
 
         // Handle the 'present' field specially - convert line breaks to HTML
-        if (isset($data['present']) && is_string($data['present']) && !empty($data['present'])) {
+        if (isset($data['present']) && is_string($data['present']) && ! empty($data['present'])) {
             // Split by double line breaks to create paragraphs, then convert single line breaks to <br>
             $present = $data['present'];
             $paragraphs = explode("\n\n", $present);
-            $htmlParagraphs = array_map(function($paragraph) {
+            $htmlParagraphs = array_map(function ($paragraph) {
                 $paragraph = trim($paragraph);
-                if (empty($paragraph)) return '';
+                if (empty($paragraph)) {
+                    return '';
+                }
                 // Convert single line breaks to <br> tags
                 $paragraph = nl2br($paragraph);
+
                 return "<p>{$paragraph}</p>";
             }, $paragraphs);
 
@@ -178,7 +188,7 @@ class CMSCollectionsController extends Controller
     {
         $treePath = base_path("content/trees/collections/{$collection}.yaml");
 
-        if (!file_exists($treePath)) {
+        if (! file_exists($treePath)) {
             return $items; // Return unsorted if no tree file exists
         }
 
@@ -186,7 +196,7 @@ class CMSCollectionsController extends Controller
             $treeContent = file_get_contents($treePath);
             $treeData = Yaml::parse($treeContent);
 
-            if (!isset($treeData['tree']) || !is_array($treeData['tree'])) {
+            if (! isset($treeData['tree']) || ! is_array($treeData['tree'])) {
                 return $items; // Return unsorted if tree structure is invalid
             }
 

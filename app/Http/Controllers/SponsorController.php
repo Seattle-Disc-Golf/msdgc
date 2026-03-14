@@ -88,7 +88,7 @@ class SponsorController extends Controller
                 // Process logo URLs to include storage prefix
                 if (isset($data['logo']) && is_array($data['logo'])) {
                     $data['logo'] = array_map(function($logoFile) {
-                        return asset('storage/' . $logoFile);
+                        return asset('assets/' . $logoFile);
                     }, $data['logo']);
                 }
 

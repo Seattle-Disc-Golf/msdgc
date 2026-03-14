@@ -138,7 +138,7 @@ class CMSCollectionsController extends Controller
         foreach ($imageFields as $field) {
             if (isset($data[$field]) && is_array($data[$field])) {
                 $data[$field] = array_map(function ($imageFile) {
-                    return asset('storage/'.$imageFile);
+                    return asset('assets/'.$imageFile);
                 }, $data[$field]);
             }
         }

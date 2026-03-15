@@ -1,9 +1,9 @@
 <template>
     <div :class="cardStyle" class="bg-zinc-800 text-white col-span-1">
-        <p class="uppercase font-bold text-6xl bangers">{{ mondayDubsData?.item?.header1 || 'Monday Dubs!!' }}</p>
-        <p>{{ mondayDubsData?.item?.paragraph_1 || '6pm in the summer, earlier as it gets darker. If you\'re there by 5 you\'re probably safe. Check the Facebook group for weekly updates.' }}</p>
+        <p class="uppercase font-bold text-6xl bangers" v-html="mondayDubsData?.item?.header1 || 'Monday Dubs!!'"></p>
+        <p v-html="mondayDubsData?.item?.paragraph_1 || '6pm in the summer, earlier as it gets darker. If you\'re there by 5 you\'re probably safe. Check the Facebook group for weekly updates.'"></p>
 
-        <p class="uppercase font-bold text-6xl bangers text-red-300">{{ mondayDubsData?.item?.header2 || 'IMPORTANT' }}</p>
+        <p class="uppercase font-bold text-6xl bangers text-red-300" v-html="mondayDubsData?.item?.header2 || 'IMPORTANT'"></p>
         <div class="text-red-100 font-bold" v-html="mondayDubsData?.item?.paragraph2 || defaultParagraph2"></div>
     </div>
 </template>

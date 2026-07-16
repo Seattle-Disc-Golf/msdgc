@@ -1,24 +1,61 @@
-import './bootstrap';
 import '../css/app.css';
-
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import 'vue3-virtual-scroller/dist/vue3-virtual-scroller.css';
 
-const appName = import.meta.env.VITE_APP_NAME || 'MSDGC';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import App from './App.vue';
+import Welcome from './Pages/Welcome.vue';
+import Board from './Pages/Board.vue';
+import BoardMinutes from './Pages/BoardMinutes.vue';
+import Contact from './Pages/Contact.vue';
+import PaymentQrLinks from './Pages/PaymentQrLinks.vue';
+import AdminLogin from './Pages/Admin/Login.vue';
+import AdminEvents from './Pages/Admin/Events.vue';
+import AdminMondayDubs from './Pages/Admin/MondayDubs.vue';
+import AdminSponsors from './Pages/Admin/Sponsors.vue';
+import AdminBoardMembers from './Pages/Admin/BoardMembers.vue';
+import AdminBoardMinutes from './Pages/Admin/BoardMinutes.vue';
 
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
-    },
-    progress: {
-        color: '#4B5563',
-    },
+const authGuard = async (_to, _from, next) => {
+  try {
+    const res = await fetch('/api/session');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.authenticated) return next();
+    }
+  } catch {}
+  next('/admin/login');
+};
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/', component: Welcome },
+    { path: '/board', component: Board },
+    { path: '/board/minutes/:id', component: BoardMinutes },
+    { path: '/contact', component: Contact },
+    { path: '/payment_qr_links', component: PaymentQrLinks },
+    { path: '/admin/login', component: AdminLogin },
+    { path: '/admin/events', component: AdminEvents, beforeEnter: authGuard },
+    { path: '/admin/monday-dubs', component: AdminMondayDubs, beforeEnter: authGuard },
+    { path: '/admin/sponsors', component: AdminSponsors, beforeEnter: authGuard },
+    { path: '/admin/board-members', component: AdminBoardMembers, beforeEnter: authGuard },
+    { path: '/admin/board-minutes', component: AdminBoardMinutes, beforeEnter: authGuard },
+    { path: '/admin', redirect: '/admin/events' },
+    { path: '/:pathMatch(.*)*', redirect: '/' },
+  ],
+  scrollBehavior(to) {
+    if (to.hash) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const el = document.querySelector(to.hash);
+          if (el) resolve({ el: to.hash, behavior: 'smooth' });
+          else resolve({ top: 0 });
+        }, 100);
+      });
+    }
+    return { top: 0 };
+  },
 });
+
+createApp(App).use(router).mount('#app');

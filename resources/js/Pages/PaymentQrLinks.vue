@@ -1,5 +1,4 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { ref, onMounted } from 'vue';
 import QRCodeLink from '@/MSDGCComponents/QRCodeLink.vue';
@@ -103,8 +102,6 @@ const copyToClipboard = async (text) => {
 </script>
 
 <template>
-
-    <Head title="Payment QR Links" />
 
     <PublicLayout :showHero="false">
         <div class="min-h-screen bg-gray-50 py-12">

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { RouterLink } from 'vue-router';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { ref, onMounted, computed } from 'vue';
 
@@ -16,7 +16,7 @@ const membersError = ref(null);
 onMounted(async () => {
     try {
         // Fetch board minutes
-        const response = await fetch('/api/collections/board_minutes');
+        const response = await fetch('/api/collections/board_minutes.json');
         if (response.ok) {
             const data = await response.json();
             // Sort minutes newest to oldest by date_of_meeting
@@ -45,7 +45,7 @@ onMounted(async () => {
         }
 
         // Fetch board members
-        const membersResponse = await fetch('/api/collections/board_member');
+        const membersResponse = await fetch('/api/collections/board_member.json');
         if (membersResponse.ok) {
             const membersData = await membersResponse.json();
             // Sort by order field if available, otherwise by name
@@ -114,8 +114,6 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
 </script>
 
 <template>
-    <Head title="Board" />
-
     <PublicLayout
         title="Board"
         :show-hero="true"
@@ -313,12 +311,17 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                                                             </div>
 
                                                             <div class="ml-4 flex-shrink-0">
-                                                                <Link
-                                                                    :href="route('board.minutes.show', minute.id)"
-                                                                    class="btn-primary bangers text-3xl"
-                                                                >
+                                                                <a v-if="minute.google_doc_url"
+                                                                    :href="minute.google_doc_url"
+                                                                    target="_blank" rel="noopener"
+                                                                    class="btn-primary bangers text-3xl">
+                                                                    View Notes
+                                                                </a>
+                                                                <RouterLink v-else
+                                                                    :to="'/board/minutes/' + minute.id"
+                                                                    class="btn-primary bangers text-3xl">
                                                                     View Minutes
-                                                                </Link>
+                                                                </RouterLink>
                                                             </div>
                                                         </div>
                                                     </div>

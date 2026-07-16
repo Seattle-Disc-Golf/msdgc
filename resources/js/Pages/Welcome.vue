@@ -1,5 +1,4 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import Course from './Sections/Course.vue';
 import LostFound from './Sections/LostFound.vue';
@@ -9,47 +8,20 @@ import LocalSponsors from './Sections/LocalSponsors.vue';
 import MondayDubs from './Sections/MondayDubs.vue';
 import UpcomingEvents from './Sections/UpcomingEvents.vue';
 
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-    appDebug: {
-        type: Boolean,
-        default: false,
-    },
-});
-
 import { ref, onMounted } from 'vue';
 
 const sponsors = ref([]);
-
 const non_pro_shop_sponsors = ref([]);
 const upcoming_events = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('/api/collections/sponsors');
+        const response = await fetch('/api/collections/sponsors.json');
         if (response.ok) {
             sponsors.value = await response.json();
-            //   remove all blueprint = "type"
-            sponsors.value.items = sponsors.value.items.filter(sponsor => sponsor.blueprint !== "type");
-
-            // Filter out non-pro shop sponsors
-            non_pro_shop_sponsors.value = sponsors.value.items.filter(sponsor => !sponsor.is_pro_shop);
-            // remove the non pro shop sponsors from the main list
-            sponsors.value.items = sponsors.value.items.filter(sponsor => sponsor.is_pro_shop);
-            // Sort sponsors by title
+            sponsors.value.items = sponsors.value.items.filter(s => s.blueprint !== 'type');
+            non_pro_shop_sponsors.value = sponsors.value.items.filter(s => !s.is_pro_shop);
+            sponsors.value.items = sponsors.value.items.filter(s => s.is_pro_shop);
         } else {
             console.error('Failed to fetch sponsors');
         }
@@ -57,9 +29,8 @@ onMounted(async () => {
         console.error('Error fetching sponsors:', error);
     }
 
-    // Fetch board minutes
     try {
-        const response = await fetch('/api/collections/upcoming');
+        const response = await fetch('/api/collections/upcoming.json');
         if (response.ok) {
             upcoming_events.value = await response.json();
         } else {
@@ -69,26 +40,15 @@ onMounted(async () => {
         console.error('Error fetching upcoming_events:', error);
     }
 
-    // Handle hash navigation after content is loaded
     if (window.location.hash) {
         setTimeout(() => {
             const element = document.querySelector(window.location.hash);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 500); // Wait a bit for content to fully render
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
     }
 });
 
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
-
-const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] text-black"
-
+const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] text-black";
 </script>
 
 <style scoped>
@@ -108,8 +68,8 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
 </style>
 
 <template>
-    <PublicLayout title="Welcome" :can-login="canLogin" :can-register="canRegister" :show-hero="true"
-        :app-debug="appDebug" hero-title="Mineral Springs Disc Golf Club"
+    <PublicLayout title="Welcome" :show-hero="true"
+        hero-title="Mineral Springs Disc Golf Club"
         hero-subtitle="A Public Benefit Non-Profit Association" hero-background="/images/north_park_hole_1.jpg">
 
         <div class="bg-gray-100 dark:bg-zinc-900 basket-tile">
@@ -161,7 +121,7 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
                             </div>
 
                             <div id="membership" :class="cardStyle" class="bg-lime-300 squatch-tile">
-                                <Membership :canLogin="canLogin" :canRegister="canRegister" />
+                                <Membership />
                             </div>
 
                         </div>

@@ -13,7 +13,7 @@
             <h1 class="text-2xl font-bold text-center mb-4">
                 Get a bag tag and join the club!
             </h1>
-            <img src="images/north_parkers.jpg" class="w-full block object-cover" />
+            <img src="/images/north_parkers.jpg" class="w-full block object-cover" />
 
             <div class="club-name text-6xl font-bold text-zinc uppercase pb-4">
                 $25 / year
@@ -81,18 +81,6 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-
-defineProps({
-    canLogin: {
-        type: Boolean,
-        default: true
-    },
-    canRegister: {
-        type: Boolean,
-        default: true
-    }
-});
 </script>
 
 <style scoped>

@@ -1,0 +1,160 @@
+{
+  "success": true,
+  "collection": "getinvolved",
+  "count": 9,
+  "items": [
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297e",
+      "blueprint": "getinvolved",
+      "title": "Telecommunications",
+      "picture": [
+        "/assets/telecomm.jpeg"
+      ],
+      "background_color": "bg-green-100",
+      "icon_color": "bg-green-600",
+      "title_color": "text-green-800",
+      "image_on_left": false,
+      "updated_by": 1,
+      "updated_at": 1752465315,
+      "filename": "telecommunications",
+      "content": "<ul>\n<li>Email Campaigns</li>\n<li>Website Editing &amp; Maintenance</li>\n<li>Calendar updating</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Email Campaigns</li>\n<li>Website Editing &amp; Maintenance</li>\n<li>Calendar updating</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297f",
+      "blueprint": "getinvolved",
+      "title": "Social Media",
+      "picture": [
+        "/assets/social_media.jpeg"
+      ],
+      "background_color": "bg-purple-100",
+      "icon_color": "bg-purple-600",
+      "title_color": "text-purple-800",
+      "image_on_left": true,
+      "updated_by": 1,
+      "updated_at": 1752468120,
+      "filename": "social-media",
+      "content": "<ul>\n<li>Create/maintain Instagram</li>\n<li>Create/maintain Twitter</li>\n<li>Facebook management</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Create/maintain Instagram</li>\n<li>Create/maintain Twitter</li>\n<li>Facebook management</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297g",
+      "blueprint": "getinvolved",
+      "title": "Digital Media Design",
+      "picture": [
+        "/assets/media.jpeg"
+      ],
+      "background_color": "bg-pink-100",
+      "icon_color": "bg-pink-600",
+      "title_color": "text-pink-800",
+      "image_on_left": false,
+      "updated_by": 1,
+      "updated_at": 1752468130,
+      "filename": "digital-media-design",
+      "content": "<ul>\n<li>Flyers</li>\n<li>Course Signage</li>\n<li>YouTube content creation</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Flyers</li>\n<li>Course Signage</li>\n<li>YouTube content creation</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297h",
+      "blueprint": "getinvolved",
+      "title": "League and Event Organizers",
+      "picture": [
+        "/assets/organize.jpeg"
+      ],
+      "background_color": "bg-orange-100",
+      "icon_color": "bg-orange-600",
+      "title_color": "text-orange-800",
+      "image_on_left": true,
+      "updated_by": 1,
+      "updated_at": 1752468142,
+      "filename": "league-and-event-organizers",
+      "content": "<ul>\n<li>Handicapped leagues/rounds</li>\n<li>Fun league</li>\n<li>Women&#39;s league</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Handicapped leagues/rounds</li>\n<li>Fun league</li>\n<li>Women&#39;s league</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297i",
+      "blueprint": "getinvolved",
+      "title": "Merchandise Creators",
+      "picture": [
+        "/assets/merch.jpg"
+      ],
+      "background_color": "bg-red-100",
+      "icon_color": "bg-red-600",
+      "title_color": "text-red-800",
+      "image_on_left": false,
+      "updated_by": 1,
+      "updated_at": 1752468151,
+      "filename": "merchandise-creators",
+      "content": "<ul>\n<li>Hot stamp press</li>\n<li>Hats, beanies, shirts, hoodies, towels etc</li>\n<li>Discs/mini&#39;s</li>\n<li>Stickers &amp; decals</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Hot stamp press</li>\n<li>Hats, beanies, shirts, hoodies, towels etc</li>\n<li>Discs/mini&#39;s</li>\n<li>Stickers &amp; decals</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297j",
+      "blueprint": "getinvolved",
+      "title": "Course Layout & Design",
+      "picture": [
+        "/assets/course.jpeg"
+      ],
+      "background_color": "bg-teal-100",
+      "icon_color": "bg-teal-600",
+      "title_color": "text-teal-800",
+      "image_on_left": true,
+      "updated_by": 1,
+      "updated_at": 1752468165,
+      "filename": "course-layout-and-design",
+      "content": "<ul>\n<li>Alternate Layouts</li>\n<li>Short baskets, ace runs, extreme OB</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Alternate Layouts</li>\n<li>Short baskets, ace runs, extreme OB</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297k",
+      "blueprint": "getinvolved",
+      "title": "Coaching & Community Outreach",
+      "picture": [
+        "/assets/outreach.jpeg"
+      ],
+      "background_color": "bg-indigo-100",
+      "icon_color": "bg-indigo-600",
+      "title_color": "text-indigo-800",
+      "image_on_left": false,
+      "updated_by": 1,
+      "updated_at": 1752468179,
+      "filename": "coaching-and-community-outreach",
+      "content": "<ul>\n<li>Kids/Teen Outreach</li>\n<li>New Player Outreach &amp; Coaching</li>\n<li>Putting Clinic</li>\n<li>Forehand Clinic</li>\n<li>Distance Clinic</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Kids/Teen Outreach</li>\n<li>New Player Outreach &amp; Coaching</li>\n<li>Putting Clinic</li>\n<li>Forehand Clinic</li>\n<li>Distance Clinic</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297l",
+      "blueprint": "getinvolved",
+      "title": "Course Maintenance",
+      "picture": [
+        "/assets/maintain.jpg"
+      ],
+      "background_color": "bg-yellow-100",
+      "icon_color": "bg-yellow-600",
+      "title_color": "text-yellow-800",
+      "image_on_left": true,
+      "updated_by": 1,
+      "updated_at": 1752468189,
+      "filename": "course-maintenance",
+      "content": "<ul>\n<li>Organize &amp; Participate in Work Parties</li>\n<li>Help with Projects like tee pad replacement/repair</li>\n<li>Build Benches, Walls, Pathways</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Organize &amp; Participate in Work Parties</li>\n<li>Help with Projects like tee pad replacement/repair</li>\n<li>Build Benches, Walls, Pathways</li>\n</ul>\n"
+    },
+    {
+      "id": "c612e581-6210-42c5-b345-828362e1297m",
+      "blueprint": "getinvolved",
+      "title": "Inventory/Supplies",
+      "picture": [
+        "/assets/inventory.jpg"
+      ],
+      "background_color": "bg-gray-100",
+      "icon_color": "bg-gray-600",
+      "title_color": "text-gray-800",
+      "image_on_left": false,
+      "updated_by": 1,
+      "updated_at": 1752468197,
+      "filename": "inventory-supplies",
+      "content": "<ul>\n<li>Glow Lights</li>\n<li>Batteries</li>\n<li>Flags</li>\n</ul>\n",
+      "content_html": "<ul>\n<li>Glow Lights</li>\n<li>Batteries</li>\n<li>Flags</li>\n</ul>\n"
+    }
+  ]
+}

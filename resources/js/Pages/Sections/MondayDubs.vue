@@ -1,10 +1,7 @@
 <template>
     <div :class="cardStyle" class="bg-zinc-800 text-white col-span-1">
-        <p class="uppercase font-bold text-6xl bangers" v-html="mondayDubsData?.item?.header1 || 'Monday Dubs!!'"></p>
-        <p v-html="mondayDubsData?.item?.paragraph_1 || '6pm in the summer, earlier as it gets darker. If you\'re there by 5 you\'re probably safe. Check the Facebook group for weekly updates.'"></p>
-
-        <p class="uppercase font-bold text-6xl bangers text-red-300" v-html="mondayDubsData?.item?.header2 || 'IMPORTANT'"></p>
-        <div class="text-red-100 font-bold" v-html="mondayDubsData?.item?.paragraph2 || defaultParagraph2"></div>
+        <p class="uppercase font-bold text-6xl bangers">{{ mondayDubsData?.item?.header1 || 'Monday Putting League' }}</p>
+        <div class="monday-content" v-html="mondayDubsData?.item?.content_html || defaultContent"></div>
     </div>
 </template>
 
@@ -13,11 +10,11 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
 import { ref, onMounted } from 'vue'
 
 const mondayDubsData = ref(null)
-const defaultParagraph2 = 'This means the course is <span class="font-bold text-pink-400">VERY BUSY on Monday evenings</span>. All are welcome, but be prepared for a fun time.'
+const defaultContent = '<p>6pm in the summer, earlier as it gets darker. Check the Facebook group for weekly updates.</p>'
 
 onMounted(async () => {
     try {
-        const response = await fetch('/api/collections/content/monday-dubs')
+        const response = await fetch('/api/collections/content/monday-dubs.json')
         if (response.ok) {
             mondayDubsData.value = await response.json()
         }
@@ -26,3 +23,61 @@ onMounted(async () => {
     }
 })
 </script>
+
+<style scoped>
+.monday-content :deep(h2) {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: #fca5a5;
+    margin-top: 1rem;
+}
+
+.monday-content :deep(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.monday-content :deep(th) {
+    text-align: left;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.7);
+}
+
+.monday-content :deep(td) {
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    vertical-align: top;
+}
+
+.monday-content :deep(.badge) {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border-radius: 0.25rem;
+    padding: 0 0.3rem;
+    font-size: 0.7rem;
+}
+
+.monday-content :deep(.badge.special) {
+    background: rgba(251, 191, 36, 0.3);
+    color: #fcd34d;
+}
+
+.monday-content :deep(.badge.party) {
+    background: rgba(52, 211, 153, 0.2);
+}
+
+.monday-content :deep(p) {
+    margin-bottom: 0.5rem;
+}
+
+.monday-content :deep(strong) {
+    color: #f9a8d4;
+}
+</style>

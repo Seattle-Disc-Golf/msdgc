@@ -1,14 +1,9 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { RouterLink, useRoute } from 'vue-router';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import { ref, onMounted, nextTick } from 'vue';
 
-const props = defineProps({
-    minuteId: {
-        type: String,
-        required: true,
-    },
-});
+const route = useRoute();
 
 const minute = ref(null);
 const loading = ref(true);
@@ -50,11 +45,13 @@ const scrollToHeader = (id) => {
 
 onMounted(async () => {
     try {
-        const response = await fetch(`/api/collections/board_minutes/${props.minuteId}`);
+        const id = route.params.id;
+        const response = await fetch('/api/collections/board_minutes.json');
         if (response.ok) {
             const data = await response.json();
-            minute.value = data.item || null;
-            generateTableOfContents();
+            minute.value = (data.items || []).find(m => m.id === id || m.filename === id) || null;
+            if (minute.value) generateTableOfContents();
+            else error.value = 'Meeting minutes not found';
         } else {
             error.value = 'Failed to fetch meeting minutes';
         }
@@ -78,8 +75,6 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
 </script>
 
 <template>
-    <Head :title="minute?.title || 'Board Meeting Minutes'" />
-
     <PublicLayout
         :title="minute?.title || 'Board Meeting Minutes'"
         :show-hero="true"
@@ -95,9 +90,9 @@ const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-
 
                             <!-- Navigation -->
                             <div class="flex items-center space-x-2 text-sm text-gray-600">
-                                <Link :href="route('board')" class="hover:text-blue-600 transition-colors btn-primary bangers text-3xl">
+                                <RouterLink to="/board" class="hover:text-blue-600 transition-colors btn-primary bangers text-3xl">
                                     ← Back to Board
-                                </Link>
+                                </RouterLink>
                             </div>
 
                             <!-- Loading State -->

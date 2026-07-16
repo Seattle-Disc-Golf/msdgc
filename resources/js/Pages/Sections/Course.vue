@@ -9,9 +9,9 @@
 
         <p>&nbsp;</p>
         <div class="box-content flex-col">
-            <div class="relative flex w-full flex-1 items-stretch"> <a href="images/north_park_map.jpg" target="_blank"
+            <div class="relative flex w-full flex-1 items-stretch"> <a href="/images/north_park_map.jpg" target="_blank"
                     rel="noopener">
-                    <img src="images/north_park_map.jpg" alt="Mineral Springs Disc Golf Course Map" />
+                    <img src="/images/north_park_map.jpg" alt="Mineral Springs Disc Golf Course Map" />
                 </a>
             </div>
             <div class="box-text">
@@ -21,7 +21,7 @@
 
                 <p>Located on a very small 2.5 acre park, this course is heavily wooded and has tight fairways that call
                     for accurate throws and distance control. It’s an 18 hole layout with 9 fairways and 14 baskets
-                    (8holes share 4 baskets). There is a tee sign at each set of tee pads and a course map (pictured to
+                    (8 holes share 4 baskets). There is a tee sign at each set of tee pads and a course map (pictured to
                     the right) by the 1st tee pad on the SE corner of the property.</p>
                 <p>&nbsp;</p>
 
@@ -35,7 +35,7 @@
                     <li>Look closely at each tee sign for important things like OB’s, mando’s, and the blue (front 9)
                         and red (back 9) baskets.</li>
                     <li>Use the arrows attached to the underside of each basket to point you toward the next set of
-                        tee-pads.</li>
+                        tee pads.</li>
                 </ul>
                 <p>It is a multi-use park so please be courteous of those around you and watch for flying discs at all
                     times.</p>

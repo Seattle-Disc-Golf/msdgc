@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { RouterLink } from 'vue-router';
 
 const cardStyle = "flex flex-col items-start gap-6 overflow-hidden rounded-lg p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] text-black"
 const headerStyle = "flex items-center justify-center"
@@ -32,18 +32,15 @@ onMounted(async () => {
         <!-- Header Navigation -->
         <header class="flex justify-between items-center text-white pr-4 px-4 py-5 lg:py-2 font-bold"
             style="background-color: #3477F4;">
-            <Link href="/">
+            <RouterLink to="/">
                 <img src="/images/msdgc_logo.png" alt="MSDGC Logo" class="h-12 w-auto pr-4 self-start sm:self-center" />
-            </Link>
+            </RouterLink>
 
             <nav class="mx-3 flex justify-end">
                 <a href="mailto:info@mineralspringsdgc.com" class="flex items-center bg-white inset text-blue-500 rounded-sm px-3 py-1 mr-8 bangers text-xl">Contact Us</a>
-                <Link :href="route('dashboard')" v-if="$page.props.auth?.user" :class="navStyle">
-                    Dashboard
-                </Link>
-                <Link href="/" :class="navStyle">
+                <RouterLink to="/" :class="navStyle">
                     Back to Home
-                </Link>
+                </RouterLink>
             </nav>
         </header>
 
@@ -178,10 +175,10 @@ onMounted(async () => {
                                    class="bg-blue-800 hover:bg-blue-900 text-white px-6 py-3 rounded-lg font-bold text-center transition-colors">
                                     Join Facebook Group
                                 </a>
-                                <Link href="/"
+                                <RouterLink to="/"
                                       class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold text-center transition-colors">
                                     Back to Home
-                                </Link>
+                                </RouterLink>
                             </div>
                         </div>
 

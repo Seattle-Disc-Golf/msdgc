@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { RouterLink } from 'vue-router';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 import VolunteerCard from '@/Components/VolunteerCard.vue';
 
@@ -10,7 +10,7 @@ const getinvolved = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('/api/collections/getinvolved');
+        const response = await fetch('/api/collections/getinvolved.json');
         if (response.ok) {
             getinvolved.value = await response.json();
         } else {
@@ -181,14 +181,10 @@ const getIconForTitle = (title) => {
                                 <!-- Navigation Links -->
                                 <div class="border-t border-gray-600 pt-6 mt-6">
                                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                        <Link href="/"
+                                        <RouterLink to="/"
                                             class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold text-center transition-colors">
-                                        Back to Home
-                                        </Link>
-                                        <Link :href="route('contact')"
-                                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold text-center transition-colors">
-                                        Get Involved
-                                        </Link>
+                                            Back to Home
+                                        </RouterLink>
                                     </div>
                                 </div>
                             </div>

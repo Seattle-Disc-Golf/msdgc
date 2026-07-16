@@ -22,6 +22,11 @@ tabs:
               type: date
               display: 'Date of Next Meeting'
           -
+            handle: google_doc_url
+            field:
+              type: link
+              display: 'Google Doc URL'
+          -
             handle: attendees
             field:
               type: users

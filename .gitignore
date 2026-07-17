@@ -16,6 +16,8 @@
 /node_modules
 /public/build
 /public/hot
+# Generated at build time by scripts/build-collections.js — do not commit
+/public/api/collections
 /storage/*.key
 /storage/pail
 /vendor
